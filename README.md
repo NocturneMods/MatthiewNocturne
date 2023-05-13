@@ -39,5 +39,4 @@ In bold, the only currently supported variant:
 - OneMoreEnemyPressTurn (**all enemies** / bosses only / normal enemies only)
 - DisplayFutureSkills (**spoilers** / no spoilers)
 - ModernPressTurns (**SMT V** / SMT IV)
-- EveryoneGetsExp (**25%** / 50% / 75% / 100%)
 - EscapeOnHard (**low** / normal)
