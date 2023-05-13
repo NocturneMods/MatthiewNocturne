@@ -69,6 +69,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixedJavelinRainXerosBeat",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayFutureSkills", "DisplayFutureSkills\DisplayFutureSkills.csproj", "{042DD868-B7B3-4151-BA51-D3A26551B2F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveryoneGetsExp", "EveryoneGetsExp\EveryoneGetsExp.csproj", "{243B68E6-4368-4695-877C-F438161A1190}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscapeOnHard", "EscapeOnHard\EscapeOnHard.csproj", "{4D81714C-174C-447A-B2B7-EEAEEAFCD103}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -210,5 +214,13 @@ Global
 		{042DD868-B7B3-4151-BA51-D3A26551B2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{042DD868-B7B3-4151-BA51-D3A26551B2F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{042DD868-B7B3-4151-BA51-D3A26551B2F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{243B68E6-4368-4695-877C-F438161A1190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{243B68E6-4368-4695-877C-F438161A1190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{243B68E6-4368-4695-877C-F438161A1190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{243B68E6-4368-4695-877C-F438161A1190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D81714C-174C-447A-B2B7-EEAEEAFCD103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D81714C-174C-447A-B2B7-EEAEEAFCD103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D81714C-174C-447A-B2B7-EEAEEAFCD103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D81714C-174C-447A-B2B7-EEAEEAFCD103}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
