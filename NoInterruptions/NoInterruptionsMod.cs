@@ -1,11 +1,10 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
 using Il2Cpp;
-using NoInterruptions;
-using Il2Cppnewdata_H;
 using Il2Cppnewbattle_H;
-using Il2Cppkernel_H;
-using System.Xml.Linq;
+using MelonLoader;
+using NoInterruptions;
 
 [assembly: MelonInfo(typeof(NoInterruptionsMod), "No interruptions", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -13,7 +12,7 @@ using System.Xml.Linq;
 namespace NoInterruptions;
 public class NoInterruptionsMod : MelonMod
 {
-    public static short tmp_enemypcnt = 0; // Remembers the number of enemies before modification
+    private static short s_tmp_enemypcnt = 0; // Remembers the number of enemies before modification
 
     // After initiating a negotiation sequence
     [HarmonyPatch(typeof(nbNegoProcess), nameof(nbNegoProcess.InitNegoProcessData))]
@@ -22,7 +21,7 @@ public class NoInterruptionsMod : MelonMod
         public static void Postfix(ref nbActionProcessData_t actdata)
         {
             // Changes the numbers of enemies to 1 so the game never triggers an interruption
-            tmp_enemypcnt = actdata.data.enemypcnt;
+            s_tmp_enemypcnt = actdata.data.enemypcnt;
             actdata.data.enemypcnt = 1;
         }
     }
@@ -34,11 +33,11 @@ public class NoInterruptionsMod : MelonMod
         public static void Prefix()
         {
             // If the number of enemies has been modified
-            if (tmp_enemypcnt != 0)
+            if (s_tmp_enemypcnt != 0)
             {
                 // Reverts it to its previous value
-                nbMainProcess.nbGetMainProcessData().enemypcnt = tmp_enemypcnt;
-                tmp_enemypcnt = 0;
+                nbMainProcess.nbGetMainProcessData().enemypcnt = s_tmp_enemypcnt;
+                s_tmp_enemypcnt = 0;
             }
         }
     }

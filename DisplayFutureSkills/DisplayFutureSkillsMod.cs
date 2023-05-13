@@ -1,9 +1,11 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using DisplayFutureSkills;
 using HarmonyLib;
 using Il2Cpp;
 using Il2Cppnewdata_H;
 using Il2Cppresult2_H;
-using DisplayFutureSkills;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(DisplayFutureSkillsMod), "Display Future Skills (0.6 ver.)", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -19,7 +21,10 @@ public class DisplayFutureSkillsMod : MelonMod
             for (int i = 0; i < pSkillInfo.SkillID.Length; i++)
             {
                 ushort skillID = pSkillInfo.SkillID[i];
-                if (skillID == 0) break;
+                if (skillID == 0)
+                {
+                    break;
+                }
 
                 string name = datSkillName.Get(skillID, pStock.id);
                 cmpStatus._statusUIScr.awaitText[i].text = "<material=\"TMC14\">" + name;

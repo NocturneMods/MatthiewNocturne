@@ -1,6 +1,8 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
 using Il2Cpp;
+using MelonLoader;
 using PierceWithoutTde;
 
 [assembly: MelonInfo(typeof(PierceWithoutTdeMod), "Pierce without TDE (ver. 0.6)", "1.0.1", "Matthiew Purple")]
@@ -18,8 +20,14 @@ public class PierceWithoutTdeMod : MelonMod
             // Checks the flag responsible for unlocking Pierce
             if (no == 2241)
             {
-                if (!__result) __result = true; // Artificially makes it obtainable
-                else tblHearts.fclHeartsTbl[1].Skill[5].TargetLevel = 21; // If unlocked normally, you can get it early
+                if (!__result)
+                {
+                    __result = true; // Artificially makes it obtainable
+                }
+                else
+                {
+                    tblHearts.fclHeartsTbl[1].Skill[5].TargetLevel = 21; // If unlocked normally, you can get it early
+                }
             }
         }
     }

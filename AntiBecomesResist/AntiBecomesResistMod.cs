@@ -1,9 +1,10 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using AntiBecomesResist;
 using HarmonyLib;
 using Il2Cpp;
-using AntiBecomesResist;
 using Il2Cppnewdata_H;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(AntiBecomesResistMod), "Anti becomes Resist (ver. 0.6)", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -11,7 +12,7 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 namespace AntiBecomesResist;
 public class AntiBecomesResistMod : MelonMod
 {
-    private static List<Tuple<datUnitWork_t, int, int>> demonsWithResist = new List<Tuple<datUnitWork_t, int, int>>();
+    private static readonly List<Tuple<datUnitWork_t, int, int>> s_demonsWithResist = new();
 
     // After checking for the element of an attack
     [HarmonyPatch(typeof(nbCalc), nameof(nbCalc.nbGetAisyo))]
@@ -22,7 +23,7 @@ public class AntiBecomesResistMod : MelonMod
             datUnitWork_t targetUnit = nbMainProcess.nbGetUnitWorkFromFormindex(formindex);
 
             // If the target with "Resist X" has already been added to the list
-            foreach (Tuple<datUnitWork_t, int, int> demonInfo in demonsWithResist)
+            foreach (Tuple<datUnitWork_t, int, int> demonInfo in s_demonsWithResist)
             {
                 if (demonInfo.Item1.id == targetUnit.id)
                 {
@@ -32,7 +33,10 @@ public class AntiBecomesResistMod : MelonMod
             }
 
             //If not neutral, pseudo-weak nor weak, act as normal
-            if ((__result < 100 || __result > 999) && __result < 1000000000) return;
+            if ((__result < 100 || __result > 999) && __result < 1000000000)
+            {
+                return;
+            }
 
             int antiSkillID;
 
@@ -89,14 +93,14 @@ public class AntiBecomesResistMod : MelonMod
                 {
                     __result = 50; // Resist
 
-                    demonsWithResist.Add(new Tuple<datUnitWork_t, int, int>(targetUnit, i, antiSkillID)); // Adds the demon to the list
+                    s_demonsWithResist.Add(new Tuple<datUnitWork_t, int, int>(targetUnit, i, antiSkillID)); // Adds the demon to the list
                     targetUnit.skill[i] = 0; // Removes the skill temporarily
                     return;
                 }
             }
         }
     }
-    
+
     // After getting the name of a skill
     [HarmonyPatch(typeof(datSkillName), nameof(datSkillName.Get))]
     private class Patch2
@@ -156,13 +160,13 @@ public class AntiBecomesResistMod : MelonMod
         public static void Postfix()
         {
             // For each demon with "Resist X"
-            foreach (Tuple<datUnitWork_t, int, int> demonInfo in demonsWithResist)
+            foreach (Tuple<datUnitWork_t, int, int> demonInfo in s_demonsWithResist)
             {
                 demonInfo.Item1.skill[demonInfo.Item2] = demonInfo.Item3; // Puts the removed skill back
             }
 
             // Clears the list
-            demonsWithResist.Clear();
+            s_demonsWithResist.Clear();
         }
     }
 }

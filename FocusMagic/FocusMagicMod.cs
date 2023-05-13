@@ -1,15 +1,17 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using FocusMagic;
 using HarmonyLib;
 using Il2Cpp;
-using focus_magic_06;
+using MelonLoader;
 
-[assembly: MelonInfo(typeof(FocusMagic06), "Focus Magic (ver. 0.6)", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(FocusMagicMod), "Focus Magic (ver. 0.6)", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
-namespace focus_magic_06;
-public class FocusMagic06 : MelonMod
+namespace FocusMagic;
+public class FocusMagicMod : MelonMod
 {
-    static public bool isHealing = false;
+    private static bool s_isHealing = false;
 
     // Before using a magic attack
     [HarmonyPatch(typeof(nbCalc), nameof(nbCalc.nbGetMagicAttack))]
@@ -18,7 +20,7 @@ public class FocusMagic06 : MelonMod
         public static void Prefix()
         {
             // Remembers that the skill is not a healing skill
-            isHealing = false;
+            s_isHealing = false;
         }
     }
 
@@ -29,7 +31,7 @@ public class FocusMagic06 : MelonMod
         public static void Prefix()
         {
             // Remembers that the skill is a healing skill
-            isHealing = true;
+            s_isHealing = true;
         }
     }
 
@@ -40,7 +42,7 @@ public class FocusMagic06 : MelonMod
         public static void Postfix(ref int formindex, ref int type, ref float __result)
         {
             // If the game is checking for the presence of magic buff (5) and the demon has focused (15)
-            if (type == 5 && nbMainProcess.nbGetPartyFromFormindex(formindex).count[15] == 1 && !isHealing)
+            if (type == 5 && nbMainProcess.nbGetPartyFromFormindex(formindex).count[15] == 1 && !s_isHealing)
             {
                 nbMainProcess.nbGetPartyFromFormindex(formindex).count[15] = 0; // Removes Focus
                 __result *= 2.5f; // Multiplies damage by 2.5
@@ -54,7 +56,10 @@ public class FocusMagic06 : MelonMod
     {
         public static void Postfix(ref int id, ref string __result)
         {
-            if (id == 224) __result = "More than doubles \nattack next turn."; // Changes Focus' description
+            if (id == 224)
+            {
+                __result = "More than doubles \nattack next turn."; // Changes Focus' description
+            }
         }
     }
 }

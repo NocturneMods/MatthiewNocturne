@@ -1,8 +1,10 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using DisplayBuffs;
 using HarmonyLib;
 using Il2Cpp;
-using DisplayBuffs;
 using Il2Cppnewbattle_H;
+using MelonLoader;
 using UnityEngine;
 
 [assembly: MelonInfo(typeof(DisplayBuffsMod), "Display buffs", "1.0.1", "Matthiew Purple")]
@@ -11,7 +13,7 @@ using UnityEngine;
 namespace DisplayBuffs;
 public class DisplayBuffsMod : MelonMod
 {
-    static sbyte target_formindex = 0; // Formindex of the target we want to display the buffs of
+    private static sbyte s_target_formindex = 0; // Formindex of the target we want to display the buffs of
 
     // Before displaying the text box
     [HarmonyPatch(typeof(nbHelpProcess), nameof(nbHelpProcess.nbDispText))]
@@ -21,15 +23,18 @@ public class DisplayBuffsMod : MelonMod
         {
             string nickname = frName.frGetCNameString(0); // Gets the player's nickname
 
-            if (nbMainProcess.nbGetUnitWorkFromFormindex(target_formindex) == null) return; // If the target died since last time, return
+            if (nbMainProcess.nbGetUnitWorkFromFormindex(s_target_formindex) == null)
+            {
+                return; // If the target died since last time, return
+            }
 
-            string demonname = datDevilName.Get(nbMainProcess.nbGetUnitWorkFromFormindex(target_formindex).id); // Gets the demon's name
+            string demonname = datDevilName.Get(nbMainProcess.nbGetUnitWorkFromFormindex(s_target_formindex).id); // Gets the demon's name
 
             // If displayng the name of the single target
-            if ((target_formindex == 0 && text2 == nickname) || (target_formindex != 0 && text2 == demonname))
+            if ((s_target_formindex == 0 && text2 == nickname) || (s_target_formindex != 0 && text2 == demonname))
             {
                 // Gets the type with the buffs info
-                nbParty_t party_member = nbMainProcess.nbGetPartyFromFormindex(target_formindex);               
+                nbParty_t party_member = nbMainProcess.nbGetPartyFromFormindex(s_target_formindex);
 
                 // If there is at least one buffed applied
                 if (Utility.AtLeastOneBuff(party_member))
@@ -64,34 +69,34 @@ public class DisplayBuffsMod : MelonMod
         public static void Prefix(ref nbTarSelProcessData_t t)
         {
             // If single target action then remember who was the target
-            if (t.ctype == 0) target_formindex = t.nowform;
+            if (t.ctype == 0)
+            {
+                s_target_formindex = t.nowform;
+            }
         }
     }
-
-    
-
-
-
 
     private class Utility
     {
         // Converts the buffs info into a list of strings with the proper format
         public static List<string> GetBuffStrings(nbParty_t party)
         {
-            List<string> buffs_strings = new List<string>();
+            List<string> buffs_strings = new();
 
             for (int i = 4; i < 8; i++)
             {
                 string buff = "";
-                
+
                 if (party.count[i] != 0)
                 {
                     if (party.count[i] > 0)
                     {
                         buff += "+";
                     }
+
                     buff += party.count[i].ToString();
                 }
+
                 buffs_strings.Add(buff);
             }
 
@@ -110,19 +115,31 @@ public class DisplayBuffsMod : MelonMod
 
             if (buffs_strings[1] != "")
             {
-                if (result != "\n ") result += " ";
+                if (result != "\n ")
+                {
+                    result += " ";
+                }
+
                 result += "MA:" + buffs_strings[1];
             }
 
             if (buffs_strings[3] != "")
             {
-                if (result != "\n ") result += " ";
+                if (result != "\n ")
+                {
+                    result += " ";
+                }
+
                 result += "DF:" + buffs_strings[3];
             }
 
             if (buffs_strings[2] != "")
             {
-                if (result != "\n ") result += " ";
+                if (result != "\n ")
+                {
+                    result += " ";
+                }
+
                 result += "HT:" + buffs_strings[2];
             }
 

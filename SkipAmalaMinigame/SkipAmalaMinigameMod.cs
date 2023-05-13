@@ -1,6 +1,8 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
 using Il2Cpp;
+using MelonLoader;
 using SkipAmalaMinigame;
 
 [assembly: MelonInfo(typeof(SkipAmalaMinigameMod), "Skip Amala minigame (0.6 ver.)", "1.0.0", "Matthiew Purple")]

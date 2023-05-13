@@ -1,7 +1,9 @@
-﻿using MelonLoader;
-using Il2Cpp;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using ActuallyUniqueDanteRaidouSkills;
 using HarmonyLib;
+using Il2Cpp;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(ActuallyUniqueDanteRaidouSkillsMod), "Actually unique Dante/Raidou skills", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -9,7 +11,7 @@ using HarmonyLib;
 namespace ActuallyUniqueDanteRaidouSkills;
 public class ActuallyUniqueDanteRaidouSkillsMod : MelonMod
 {
-    private static bool isHolyStar; // is true when the last used skill was Holy Star / Raptor Guardian
+    private static bool s_isHolyStar; // is true when the last used skill was Holy Star / Raptor Guardian
 
     // After getting the description of a skill
     [HarmonyPatch(typeof(datSkillHelp_msg), nameof(datSkillHelp_msg.Get))]
@@ -38,11 +40,11 @@ public class ActuallyUniqueDanteRaidouSkillsMod : MelonMod
         public static void Prefix(ref string text1, ref int type)
         {
             // If the text box is displaying the effect of Holy Star / Raptor Guardian
-            if (type == 1 && isHolyStar)
+            if (type == 1 && s_isHolyStar)
             {
                 type = 0;
                 text1 = "Negated all -kaja & -nda effects!";
-                isHolyStar = false;
+                s_isHolyStar = false;
             }
         }
     }
@@ -53,7 +55,7 @@ public class ActuallyUniqueDanteRaidouSkillsMod : MelonMod
     {
         public static void Prefix(ref int id)
         {
-            isHolyStar = id == 274;
+            s_isHolyStar = id == 274;
         }
     }
 

@@ -1,7 +1,9 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using BuffedMindsEye;
 using HarmonyLib;
 using Il2Cpp;
-using BuffedMindsEye;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(BuffedMindsEyeMod), "Buffed Mind's Eye (ver. 0.6)", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -16,7 +18,10 @@ public class BuffedMindsEyeMod : MelonMod
         public static void Postfix(ref int __result)
         {
             // If someone has Mind's Eye, then always avoid back attacks
-            if (datCalc.datCheckSkillInParty(298) == 1) __result = 0;
+            if (datCalc.datCheckSkillInParty(298) == 1)
+            {
+                __result = 0;
+            }
         }
     }
 
@@ -27,7 +32,10 @@ public class BuffedMindsEyeMod : MelonMod
         public static void Postfix(ref int id, ref string __result)
         {
             // New skill description for Mind's Eye
-            if (id == 298) __result = "Prevents being attacked \nfrom behind.";
+            if (id == 298)
+            {
+                __result = "Prevents being attacked \nfrom behind.";
+            }
         }
     }
 }

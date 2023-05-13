@@ -1,7 +1,9 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using FiendsNerf;
 using HarmonyLib;
 using Il2Cpp;
-using FiendsNerf;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(FiendsNerfMod), "Fiends nerf", "1.0.1", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -15,7 +17,8 @@ public class FiendsNerfMod : MelonMod
     {
         public static void Postfix(ref int id, ref string __result)
         {
-            switch (id) {
+            switch (id)
+            {
                 case 199:
                     __result = "Null: Force/Light/Dark • Str: Nerve • Weak: Elec"; // Matador
                     break;
@@ -64,7 +67,6 @@ public class FiendsNerfMod : MelonMod
         // Removes Prayer from Daisoujou's upcoming skills
         tblSkill.fclSkillTbl[201].Event[3] = tblSkill.fclSkillTbl[201].Event[4];
         tblSkill.fclSkillTbl[201].Event[4] = tblSkill.fclSkillTbl[201].Event[5];
-
 
         // Changes Hell Biker's affinities
         datAisyo.tbl[200][2] = 2147483798; // Weak to Ice

@@ -1,6 +1,8 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
 using Il2Cpp;
+using MelonLoader;
 using ModernPressTurns;
 
 [assembly: MelonInfo(typeof(ModernPressTurnsMod), "Modern Press Turns [SMT V] (0.6 ver.)", "1.0.0", "Matthiew Purple")]
@@ -57,7 +59,10 @@ public class ModernPressTurnsMod : MelonMod
     {
         public static void Prefix(ref int startframe, ref int ptype)
         {
-            if (ptype == 9) startframe = 0; // If using DISMISS then create the PressPacket immediately
+            if (ptype == 9)
+            {
+                startframe = 0; // If using DISMISS then create the PressPacket immediately
+            }
         }
     }
 
@@ -101,7 +106,6 @@ public class ModernPressTurnsMod : MelonMod
         }
     }
 
-    
     public static class PressTurnsAdjustements
     {
         public static void MainFullToBlinking()

@@ -1,9 +1,11 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
 using Il2Cpp;
-using InfiniteMagatamaSkills;
-using Il2Cppresult2_H;
 using Il2Cppnewdata_H;
+using Il2Cppresult2_H;
+using InfiniteMagatamaSkills;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(InfiniteMagatamaSkillsMod), "Infinite Magatama skills", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -29,7 +31,7 @@ public class InfiniteMagatamaSkillsMod : MelonMod
                 }
 
                 // While DF knows each skill of this magatama and there are still skills to learn
-                while (Utility.hasDemifiendThatSkill(tblHearts.fclHeartsTbl[currentMagatama].Skill[dds3GlobalWork.DDS3_GBWK.heartsskcnt[currentMagatama]].ID) && tblHearts.fclHeartsTbl[currentMagatama].Skill[dds3GlobalWork.DDS3_GBWK.heartsskcnt[currentMagatama]].ID != 0)
+                while (Utility.HasDemifiendThatSkill(tblHearts.fclHeartsTbl[currentMagatama].Skill[dds3GlobalWork.DDS3_GBWK.heartsskcnt[currentMagatama]].ID) && tblHearts.fclHeartsTbl[currentMagatama].Skill[dds3GlobalWork.DDS3_GBWK.heartsskcnt[currentMagatama]].ID != 0)
                 {
                     dds3GlobalWork.DDS3_GBWK.heartsskcnt[currentMagatama]++; // Skip the skill in the progression of learned skills from this magatama
                 }
@@ -46,8 +48,14 @@ public class InfiniteMagatamaSkillsMod : MelonMod
             int consumedSkillsLength = Utility.GetConsummedSkillsLength(HeartsID); // Get the progression of learned skills from this magatama
             int MagatamaSkillsLength = Utility.GetMagatamaSkillsLength(HeartsID); // Get the number of learnable skills from this magatama
 
-            if (consumedSkillsLength < MagatamaSkillsLength) __result = 0; // If not all learnable skills have been learned at least once, the magatama isn't mastered
-            else __result = 1;
+            if (consumedSkillsLength < MagatamaSkillsLength)
+            {
+                __result = 0; // If not all learnable skills have been learned at least once, the magatama isn't mastered
+            }
+            else
+            {
+                __result = 1;
+            }
         }
     }
 
@@ -63,6 +71,7 @@ public class InfiniteMagatamaSkillsMod : MelonMod
                     return i;
                 }
             }
+
             return -1; // Not gonna happen
         }
 
@@ -76,11 +85,12 @@ public class InfiniteMagatamaSkillsMod : MelonMod
                     return i;
                 }
             }
+
             return -1; // Not gonna happen
         }
 
         // Returns true if Demi-fiend has the skill
-        public static bool hasDemifiendThatSkill(ushort SkillID)
+        public static bool HasDemifiendThatSkill(ushort SkillID)
         {
             for (int i = 0; i < dds3GlobalWork.DDS3_GBWK.unitwork[0].skill.Length; i++)
             {
@@ -89,6 +99,7 @@ public class InfiniteMagatamaSkillsMod : MelonMod
                     return true;
                 }
             }
+
             return false;
         }
     }

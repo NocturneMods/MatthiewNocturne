@@ -1,8 +1,9 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using BuffedRepulseBell;
 using HarmonyLib;
 using Il2Cpp;
-using BuffedRepulseBell;
-using Il2Cppfacility_H;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(BuffedRepulseBellMod), "Buffed Repulse Bell/Estoma (0.6 ver.)", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -26,7 +27,10 @@ public class BuffedRepulseBellMod : MelonMod
     {
         public static void Postfix(ref int id, ref string __result)
         {
-            if (id == 73) __result = "Prevents random \ndemon encounters \nuntil a new Kagutsuchi."; // Estoma's new description
+            if (id == 73)
+            {
+                __result = "Prevents random \ndemon encounters \nuntil a new Kagutsuchi."; // Estoma's new description
+            }
         }
     }
 
@@ -36,7 +40,10 @@ public class BuffedRepulseBellMod : MelonMod
     {
         public static void Postfix(ref int id, ref string __result)
         {
-            if (id == 52) __result = "Prevents random \ndemon encounters \nuntil a new Kagutsuchi."; // Repulse Bell's new description
+            if (id == 52)
+            {
+                __result = "Prevents random \ndemon encounters \nuntil a new Kagutsuchi."; // Repulse Bell's new description
+            }
         }
     }
 }

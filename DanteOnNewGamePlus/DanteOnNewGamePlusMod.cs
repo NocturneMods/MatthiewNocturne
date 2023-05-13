@@ -1,8 +1,10 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using DanteOnNewGamePlus;
 using HarmonyLib;
 using Il2Cpp;
-using DanteOnNewGamePlus;
 using Il2Cppnewdata_H;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(DanteOnNewGamePlusMod), "Dante/Raidou on New Game Plus [level 1]", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -19,7 +21,10 @@ public class DanteOnNewGamePlusMod : MelonMod
             // If Dante/Raidou not already in party
             foreach (datUnitWork_t work in dds3GlobalWork.DDS3_GBWK.unitwork)
             {
-                if (work.id == 192) return; // Does nothing
+                if (work.id == 192)
+                {
+                    return; // Does nothing
+                }
             }
 
             // If he's not in the party already, adds him

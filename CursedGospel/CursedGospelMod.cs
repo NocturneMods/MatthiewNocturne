@@ -1,9 +1,11 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using CursedGospel;
 using HarmonyLib;
 using Il2Cpp;
-using CursedGospel;
 using Il2Cppfacility_H;
 using Il2Cppnewdata_H;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(CursedGospelMod), "Cursed Gospel", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -32,7 +34,10 @@ public class CursedGospelMod : MelonMod
         public static void Postfix(ref int id, ref string __result)
         {
             // If searching for the gospel, returns its name
-            if (id == 60) __result = "Cursed Gospel";
+            if (id == 60)
+            {
+                __result = "Cursed Gospel";
+            }
         }
     }
 
@@ -43,7 +48,10 @@ public class CursedGospelMod : MelonMod
         public static void Postfix(ref int id, ref string __result)
         {
             // If searching for the gospel, returns its description
-            if (id == 60) __result = "Demi-fiend earns enough EXP \nto level up but loses one level. \nReusable.";
+            if (id == 60)
+            {
+                __result = "Demi-fiend earns enough EXP \nto level up but loses one level. \nReusable.";
+            }
         }
     }
 
@@ -63,11 +71,11 @@ public class CursedGospelMod : MelonMod
                     unit.exp = rstCalcCore.GetNextExpDisp(unit, 0) - 1;
 
                     bool hasLostStat = false;
-                    List<short> statList = new List<short> { 0, 2, 3, 4, 5 };
+                    List<short> statList = new() { 0, 2, 3, 4, 5 };
 
                     while (!hasLostStat)
                     {
-                        Random rnd = new Random();
+                        Random rnd = new();
                         short stat = statList[rnd.Next(statList.Count)];
 
                         // If the BASE stat is higher than 1 (total stat minus magatama stat)

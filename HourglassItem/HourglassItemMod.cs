@@ -1,8 +1,10 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
-using Il2Cpp;
 using HourglassItem;
+using Il2Cpp;
 using Il2Cppfacility_H;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(HourglassItemMod), "Hourglass item", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -28,7 +30,10 @@ public class HourglassItemMod : MelonMod
         public static void Postfix(ref int id, ref string __result)
         {
             // If searching for the hourglass, returns its name
-            if (id == 57) __result = "Hourglass";
+            if (id == 57)
+            {
+                __result = "Hourglass";
+            }
         }
     }
 
@@ -39,7 +44,10 @@ public class HourglassItemMod : MelonMod
         public static void Postfix(ref int id, ref string __result)
         {
             // If searching for the hourglass, returns its description
-            if (id == 57) __result = "Passes the time \nuntil a full Kagutsuchi.";
+            if (id == 57)
+            {
+                __result = "Passes the time \nuntil a full Kagutsuchi.";
+            }
         }
     }
 
@@ -66,7 +74,7 @@ public class HourglassItemMod : MelonMod
 
                     dds3GlobalWork.DDS3_GBWK.Moon.MoveCnt = 0; // Beginning of a new phase
                     evtMoon.evtSetAgeOfMoon(8); // Set Kagutsuchi's phase to full
-                }                
+                }
             }
         }
     }

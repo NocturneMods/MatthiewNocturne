@@ -1,13 +1,14 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using EarlyCompendium;
 using HarmonyLib;
 using Il2Cpp;
-using early_compendium;
-using Il2Cppnewdata_H;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(EarlyCompendiumMod), "Early Compendium", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
-namespace early_compendium;
+namespace EarlyCompendium;
 public class EarlyCompendiumMod : MelonMod
 {
     // After checking for the state of a flag
@@ -16,7 +17,10 @@ public class EarlyCompendiumMod : MelonMod
     {
         public static void Postfix(ref int no, ref bool __result)
         {
-            if (no == 40) __result = true; // Compendium's flag always returns true
+            if (no == 40)
+            {
+                __result = true; // Compendium's flag always returns true
+            }
         }
     }
 }

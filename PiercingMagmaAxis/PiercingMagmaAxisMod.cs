@@ -1,6 +1,8 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
 using Il2Cpp;
+using MelonLoader;
 using PiercingMagmaAxis;
 
 [assembly: MelonInfo(typeof(PiercingMagmaAxisMod), "Piercing Magma Axis [including Repel] (ver. 0.6)", "1.0.0", "Matthiew Purple")]
@@ -30,7 +32,10 @@ public class PiercingMagmaAxisMod : MelonMod
     {
         public static void Postfix(ref int id, ref string __result)
         {
-            if (id == 161) __result = "Fire damage to one foe. \nIgnores all resistances."; // New skill description of Magma Axis
+            if (id == 161)
+            {
+                __result = "Fire damage to one foe. \nIgnores all resistances."; // New skill description of Magma Axis
+            }
         }
     }
 }

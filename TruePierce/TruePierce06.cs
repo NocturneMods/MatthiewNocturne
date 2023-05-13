@@ -1,6 +1,8 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
 using Il2Cpp;
+using MelonLoader;
 using TruePierce;
 
 [assembly: MelonInfo(typeof(TruePierceMod), "Pierce physical repel (ver. 0.6)", "1.0.0", "Matthiew Purple")]
@@ -9,7 +11,7 @@ using TruePierce;
 namespace TruePierce;
 public class TruePierceMod : MelonMod
 {
-    private static bool hasPierce; // Remembers if the attacker has Pierce or Son's Oath/Raidou the Eternal
+    private static bool s_hasPierce; // Remembers if the attacker has Pierce or Son's Oath/Raidou the Eternal
 
     // Before getting the effectiveness of a skill
     [HarmonyPatch(typeof(nbCalc), nameof(nbCalc.nbGetKoukaType))]
@@ -21,7 +23,7 @@ public class TruePierceMod : MelonMod
             if (nbMainProcess.nbGetUnitWorkFromFormindex(sformindex) != null && nskill != 71)
             {
                 // 357 = Pierce and 361 = Son's Oath/Raidou the Eternal
-                hasPierce = nbMainProcess.nbGetUnitWorkFromFormindex(sformindex).skill.Contains(357) || nbMainProcess.nbGetUnitWorkFromFormindex(sformindex).skill.Contains(361);
+                s_hasPierce = nbMainProcess.nbGetUnitWorkFromFormindex(sformindex).skill.Contains(357) || nbMainProcess.nbGetUnitWorkFromFormindex(sformindex).skill.Contains(361);
             }
         }
     }
@@ -33,7 +35,7 @@ public class TruePierceMod : MelonMod
         public static void Postfix(ref uint __result, ref int attr)
         {
             // If the attack has Pierce (or equivalent) and the attack is physical and it's resisted/blocked/drained/repelled
-            if (hasPierce && attr == 0 && (__result < 100 || (__result >= 65536 && __result < 2147483648)))
+            if (s_hasPierce && attr == 0 && (__result < 100 || (__result >= 65536 && __result < 2147483648)))
             {
                 __result = 100; // Forces the affinity to become "neutral"
                 nbMainProcess.nbGetMainProcessData().d31_kantuu = 1; // Displays the "Pierced!" message
@@ -47,7 +49,10 @@ public class TruePierceMod : MelonMod
     {
         public static void Postfix(ref int id, ref string __result)
         {
-            if (id == 357) __result = "Physical attacks ignore \nall resistances."; // New skill description for Pierce
+            if (id == 357)
+            {
+                __result = "Physical attacks ignore \nall resistances."; // New skill description for Pierce
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
 using HarmonyLib;
 using Il2Cpp;
+using MelonLoader;
 using OneMoreEnemyPressTurn;
 
 [assembly: MelonInfo(typeof(OneMoreEnemyPressTurnMod), "One more enemy Press Turn (ver. 0.6)", "1.0.0", "Matthiew Purple")]

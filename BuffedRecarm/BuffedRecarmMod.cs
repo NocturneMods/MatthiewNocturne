@@ -1,8 +1,10 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using BuffedRecarm;
 using HarmonyLib;
 using Il2Cpp;
-using BuffedRecarm;
 using Il2Cppnewdata_H;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(BuffedRecarmMod), "Buffed Recarm/Revival Bead (ver. 0.6)", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -10,7 +12,7 @@ using Il2Cppnewdata_H;
 namespace BuffedRecarm;
 public class BuffedRecarmMod : MelonMod
 {
-    private static bool usingRecarm; // Is true when the last used skill/item during battle was Recarm/Revival Bead
+    private static bool s_usingRecarm; // Is true when the last used skill/item during battle was Recarm/Revival Bead
 
     // After applying a skill effect outside of battle
     [HarmonyPatch(typeof(datCalc), nameof(datCalc.datExecSkill))]
@@ -19,7 +21,10 @@ public class BuffedRecarmMod : MelonMod
         public static void Postfix(ref int nskill, ref datUnitWork_t d)
         {
             // If using Recarm/Revival Bead then change the target's HP to half of its maximum
-            if (nskill == 49) d.hp = (ushort)(d.maxhp / 2);
+            if (nskill == 49)
+            {
+                d.hp = (ushort)(d.maxhp / 2);
+            }
         }
     }
 
@@ -30,7 +35,10 @@ public class BuffedRecarmMod : MelonMod
         public static void Postfix(ref int id, ref string __result)
         {
             // If using Recarm then change the returned description
-            if (id == 49) __result = "Revives one ally \nwith half HP.";
+            if (id == 49)
+            {
+                __result = "Revives one ally \nwith half HP.";
+            }
         }
     }
 
@@ -41,7 +49,10 @@ public class BuffedRecarmMod : MelonMod
         public static void Postfix(ref int id, ref string __result)
         {
             // If using a Revival Bead then change the returned description
-            if (id == 13) __result = "Revives one ally \nwith half HP.";
+            if (id == 13)
+            {
+                __result = "Revives one ally \nwith half HP.";
+            }
         }
     }
 
@@ -52,7 +63,7 @@ public class BuffedRecarmMod : MelonMod
         public static void Postfix(ref int x)
         {
             // Memorize if that skill was Recarm (or Revival Bead as items are actually skills)
-            usingRecarm = x == 49;
+            s_usingRecarm = x == 49;
         }
     }
 
@@ -63,13 +74,13 @@ public class BuffedRecarmMod : MelonMod
         public static void Prefix(ref datUnitWork_t work, ref int hp)
         {
             // If using Recarm/Revival Bead
-            if (usingRecarm)
+            if (s_usingRecarm)
             {
                 // Change the target's HP to half of its maximum
                 hp = work.maxhp / 2;
 
                 // Forget Recarm/Revival Bead were used
-                usingRecarm = false;
+                s_usingRecarm = false;
             }
         }
     }

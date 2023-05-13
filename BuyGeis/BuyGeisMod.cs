@@ -1,8 +1,10 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using BuyGeis;
 using HarmonyLib;
 using Il2Cpp;
-using BuyGeis;
 using Il2Cppfacility_H;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(BuyGeisMod), "Buy Geis (0.6 ver.)", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -31,7 +33,10 @@ public class BuyGeisMod : MelonMod
         // Adds a description for Geis in the shop list
         public static void Postfix(ref int id, ref string __result)
         {
-            if (id == 76) __result = datItemHelp_msg.Get(66); // Gives Geis the same description as Ankh ("Healing-type Magatama")
+            if (id == 76)
+            {
+                __result = datItemHelp_msg.Get(66); // Gives Geis the same description as Ankh ("Healing-type Magatama")
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using MelonLoader;
+﻿// Copyright (c) MatthiewPurple.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
+
+using AnalyzeBosses;
 using HarmonyLib;
 using Il2Cpp;
-using AnalyzeBosses;
 using Il2CppTMPro;
-using Il2Cppresult2_H;
-using Il2Cppnewdata_H;
+using MelonLoader;
 
 [assembly: MelonInfo(typeof(AnalyzeBossesMod), "Analyze bosses (ver. 0.6)", "0.1.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -12,7 +12,7 @@ using Il2Cppnewdata_H;
 namespace AnalyzeBosses;
 public class AnalyzeBossesMod : MelonMod
 {
-    static bool isHPMPOn = true; // Remembers if the HP/MP related numbers are displayed
+    private static bool s_isHPMPOn = true; // Remembers if the HP/MP related numbers are displayed
 
     // After checking if the analysis panel should be hidden
     [HarmonyPatch(typeof(datAnalyzeOff), nameof(datAnalyzeOff.Get))]
@@ -31,11 +31,11 @@ public class AnalyzeBossesMod : MelonMod
         public static void Prefix()
         {
             // Waits a bit before searching for 
-            if (nbMainProcess.GetBattleUI(5) != null && !isHPMPOn)
+            if (nbMainProcess.GetBattleUI(5) != null && !s_isHPMPOn)
             {
                 // Display HP and MP info (in case it was hidden for a boss)
                 Utility.DisplayHPMP(true);
-                isHPMPOn = true;
+                s_isHPMPOn = true;
             }
         }
     }
@@ -503,17 +503,32 @@ public class AnalyzeBossesMod : MelonMod
                         {
                             repelText = "Rpl: Phys";
 
-                            if (nbCalc.nbGetAisyo(0, 4, 1) == 131072) repelText += "/Fire";
-                            else if (nbCalc.nbGetAisyo(0, 4, 2) == 131072) repelText += "/Ice";
-                            else if (nbCalc.nbGetAisyo(0, 4, 3) == 131072) repelText += "/Elec";
-                            else if (nbCalc.nbGetAisyo(0, 4, 4) == 131072) repelText += "/Force";
+                            if (nbCalc.nbGetAisyo(0, 4, 1) == 131072)
+                            {
+                                repelText += "/Fire";
+                            }
+                            else if (nbCalc.nbGetAisyo(0, 4, 2) == 131072)
+                            {
+                                repelText += "/Ice";
+                            }
+                            else if (nbCalc.nbGetAisyo(0, 4, 3) == 131072)
+                            {
+                                repelText += "/Elec";
+                            }
+                            else if (nbCalc.nbGetAisyo(0, 4, 4) == 131072)
+                            {
+                                repelText += "/Force";
+                            }
 
                             repelText += " • ";
                         }
 
                         affinitiesText = repelText + "Null: Light/Dark/Ailments";
 
-                        if (nbCalc.nbGetAisyo(0, 4, 5) == 10) affinitiesText += " • Str: Almighty";
+                        if (nbCalc.nbGetAisyo(0, 4, 5) == 10)
+                        {
+                            affinitiesText += " • Str: Almighty";
+                        }
 
                         nbMainProcess.GetBattleUI(5).transform.Find("banalyze_skill/banalyze_skill01/banalyze_textTM").gameObject.GetComponent<TextMeshProUGUI>().text = datSkillName.Get(234);
                         nbMainProcess.GetBattleUI(5).transform.Find("banalyze_skill/banalyze_skill02/banalyze_textTM").gameObject.GetComponent<TextMeshProUGUI>().text = datSkillName.Get(3);
@@ -524,16 +539,31 @@ public class AnalyzeBossesMod : MelonMod
                     case 0259: //Noah2
                         string repelText2 = "Rpl: Phys";
 
-                        if (nbCalc.nbGetAisyo(0, 4, 1) == 131072) repelText2 += "/Fire";
-                        else if (nbCalc.nbGetAisyo(0, 4, 2) == 131072) repelText2 += "/Ice";
-                        else if (nbCalc.nbGetAisyo(0, 4, 3) == 131072) repelText2 += "/Elec";
-                        else if (nbCalc.nbGetAisyo(0, 4, 4) == 131072) repelText2 += "/Force";
+                        if (nbCalc.nbGetAisyo(0, 4, 1) == 131072)
+                        {
+                            repelText2 += "/Fire";
+                        }
+                        else if (nbCalc.nbGetAisyo(0, 4, 2) == 131072)
+                        {
+                            repelText2 += "/Ice";
+                        }
+                        else if (nbCalc.nbGetAisyo(0, 4, 3) == 131072)
+                        {
+                            repelText2 += "/Elec";
+                        }
+                        else if (nbCalc.nbGetAisyo(0, 4, 4) == 131072)
+                        {
+                            repelText2 += "/Force";
+                        }
 
                         repelText2 += " • ";
 
                         affinitiesText = repelText2 + "Null: Light/Dark/Ailments";
 
-                        if (nbCalc.nbGetAisyo(0, 4, 5) == 10) affinitiesText += " • Str: Almighty";
+                        if (nbCalc.nbGetAisyo(0, 4, 5) == 10)
+                        {
+                            affinitiesText += " • Str: Almighty";
+                        }
 
                         nbMainProcess.GetBattleUI(5).transform.Find("banalyze_skill/banalyze_skill01/banalyze_textTM").gameObject.GetComponent<TextMeshProUGUI>().text = datSkillName.Get(234);
                         nbMainProcess.GetBattleUI(5).transform.Find("banalyze_skill/banalyze_skill02/banalyze_textTM").gameObject.GetComponent<TextMeshProUGUI>().text = datSkillName.Get(250);
@@ -607,7 +637,11 @@ public class AnalyzeBossesMod : MelonMod
                         nbMainProcess.GetBattleUI(5).transform.Find("banalyze_skill/banalyze_skill02/banalyze_textTM").gameObject.GetComponent<TextMeshProUGUI>().text = datSkillName.Get(210);
                         break;
                     case 0117: //Succubus (Chest boss)
-                        if (nbMainProcess.nbGetMainProcessData().encno != 990) return; // If fighting a regular Succubus
+                        if (nbMainProcess.nbGetMainProcessData().encno != 990)
+                        {
+                            return; // If fighting a regular Succubus
+                        }
+
                         affinitiesText = datAisyoName.Get(117);
                         break;
                     case 0361: //Legion (Black Rider)
@@ -929,12 +963,12 @@ public class AnalyzeBossesMod : MelonMod
                     default:
                         return; // Not do anything special if the target isn't a boss
                 }
-                nbMainProcess.GetBattleUI(5).transform.Find("banalyze_attribute/banalyze_attribute_textTM").gameObject.GetComponent<TextMeshProUGUI>().text = affinitiesText; // Apply the affinities' text
 
+                nbMainProcess.GetBattleUI(5).transform.Find("banalyze_attribute/banalyze_attribute_textTM").gameObject.GetComponent<TextMeshProUGUI>().text = affinitiesText; // Apply the affinities' text
 
                 // Remove HP and MP info (because most bosses have more than triple digits HP/MP)
                 Utility.DisplayHPMP(false);
-                isHPMPOn = false;
+                s_isHPMPOn = false;
             }
         }
     }
