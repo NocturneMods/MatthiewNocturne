@@ -52,7 +52,7 @@ public class EveryoneGetsExpMod : MelonMod
     {
         public static void Postfix()
         {
-            // Give passive demons either 25% or 100% exp if they have Watchful
+            // Give passive demons either s_cfgSharedXp% or s_cfgSharedXpWatchful% exp if they have Watchful
             for (int i = 0; i < dds3GlobalWork.DDS3_GBWK.unitwork.Length; i++)
             {
                 if (dds3GlobalWork.DDS3_GBWK.unitwork[i].hp > 0)
@@ -60,12 +60,12 @@ public class EveryoneGetsExpMod : MelonMod
                     // If a demon didn't get any exp yet (i.e. if it's a passive demon without Watchful)
                     if (s_unitExpList[i] == dds3GlobalWork.DDS3_GBWK.unitwork[i].exp)
                     {
-                        datCalc.datAddExp(dds3GlobalWork.DDS3_GBWK.unitwork[i], (int)(nbResultProcess.AllExp * s_cfgSharedXp.Value / 100)); // Get 25% exp
+                        datCalc.datAddExp(dds3GlobalWork.DDS3_GBWK.unitwork[i], (int)(nbResultProcess.AllExp * s_cfgSharedXp.Value / 100)); // Get s_cfgSharedXp%
                     }
                     // If they didn't get 100% exp and have Watchful
                     else if (s_unitExpList[i] + nbResultProcess.AllExp != dds3GlobalWork.DDS3_GBWK.unitwork[i].exp && dds3GlobalWork.DDS3_GBWK.unitwork[i].skill.Contains(354))
                     {
-                        datCalc.datAddExp(dds3GlobalWork.DDS3_GBWK.unitwork[i], (int)Math.Ceiling(nbResultProcess.AllExp * s_cfgSharedXpWatchful.Value / 100)); // Get 50% exp (+ vanilla 50% exp)
+                        datCalc.datAddExp(dds3GlobalWork.DDS3_GBWK.unitwork[i], (int)Math.Ceiling(nbResultProcess.AllExp * s_cfgSharedXpWatchful.Value / 100)); // Get s_cfgSharedXpWatchful% exp (+ vanilla 50% exp)
                     }
                 }
             }
