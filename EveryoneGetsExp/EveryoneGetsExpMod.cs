@@ -25,8 +25,8 @@ public class EveryoneGetsExpMod : MelonMod
         Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("EveryoneGetsExp");
-        s_cfgSharedXp = s_cfgCategoryMain.CreateEntry<float>("SharedXp", 50.0f, "Shared XP", description: "How much XP goes to the party members, in percents.");
-        s_cfgSharedXpWatchful = s_cfgCategoryMain.CreateEntry<float>("SharedXpWatchful", 50.0f, "Shared XP Watchful", description: "In addition to the default 50% XP given to the team members with Watchful, how much additional XP should they get, in percents.");
+        s_cfgSharedXp = s_cfgCategoryMain.CreateEntry<float>("SharedXp", 0.0f, "Shared XP", description: "How much XP goes to the party members, in percents.");
+        s_cfgSharedXpWatchful = s_cfgCategoryMain.CreateEntry<float>("SharedXpWatchful", 0.0f, "Shared XP Watchful", description: "In addition to the default 50% XP given to the team members with Watchful, how much additional XP should they get, in percents.");
 
         s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgCategoryMain.SaveToFile();
