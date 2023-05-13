@@ -4,6 +4,7 @@ using EveryoneGetsExp;
 using HarmonyLib;
 using Il2Cpp;
 using MelonLoader;
+using MelonLoader.Utils;
 
 [assembly: MelonInfo(typeof(EveryoneGetsExpMod), "Everyone Gets Experience 25% (0.6 ver.)", "1.0.0", "Matthiew Purple")]
 [assembly: MelonGame("アトラス", "smt3hd")]
@@ -11,7 +12,7 @@ using MelonLoader;
 namespace EveryoneGetsExp;
 public class EveryoneGetsExpMod : MelonMod
 {
-    public const string ConfigPath = "ModsCfg/EveryoneGetsExp.toml";
+    public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "EveryoneGetsExp.cfg");
 
     private static uint[] s_unitExpList = Array.Empty<uint>();
 
@@ -21,10 +22,14 @@ public class EveryoneGetsExpMod : MelonMod
 
     public override void OnInitializeMelon()
     {
+        Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
+
         s_cfgCategoryMain = MelonPreferences.CreateCategory("EveryoneGetsExp");
-        s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgSharedXp = s_cfgCategoryMain.CreateEntry<float>("SharedXp", 50.0f, "Shared XP", description: "How much XP goes to the party members, in percents.");
         s_cfgSharedXpWatchful = s_cfgCategoryMain.CreateEntry<float>("SharedXpWatchful", 50.0f, "Shared XP Watchful", description: "In addition to the default 50% XP given to the team members with Watchful, how much additional XP should they get, in percents.");
+
+        s_cfgCategoryMain.SetFilePath(ConfigPath);
+        s_cfgCategoryMain.SaveToFile();
     }
 
     [HarmonyPatch(typeof(nbResultProcess), nameof(nbResultProcess.nbResultLoad))]
