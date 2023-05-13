@@ -18,8 +18,9 @@ public class EscapeOnHardMod : MelonMod
     public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "EscapeOnHard.cfg");
 
     private static MelonPreferences_Category s_cfgCategoryMain = null!;
-    private static MelonPreferences_Entry<float> s_cfgLowerEscapeRate = null!;
     private static MelonPreferences_Entry<bool> s_cfgUseNormalEscapeOnHard = null!;
+    private static MelonPreferences_Entry<float> s_cfgLowerEscapeRate = null!;
+    private static MelonPreferences_Entry<bool> s_cfgLowerEscapeRateHardOnly = null!;
     private static MelonPreferences_Entry<float> s_cfgFastRetreatHigherRate = null!;
 
     private static bool s_temporaryNormalMode = false; // Remembers if the game was on Hard difficulty before switching to Normal
@@ -30,6 +31,7 @@ public class EscapeOnHardMod : MelonMod
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("EscapeOnHard");
         s_cfgUseNormalEscapeOnHard = s_cfgCategoryMain.CreateEntry<bool>("UseNormalEscapeOnHard", false, "Use Normal difficulty escape rate in Hard difficulty.");
+        s_cfgLowerEscapeRateHardOnly = s_cfgCategoryMain.CreateEntry<bool>("LowerEscapeRateHardOnly", false, "Lower escape rate only in Hard", description: "Enables the lowers escape rate percentage only in hard mode.");
         s_cfgLowerEscapeRate = s_cfgCategoryMain.CreateEntry<float>("LowerEscapeRate", 0.0f, "Lower escape rate", description: "Lowers the vanilla escape rate. If the escape should work you get an bonus x% chance to fail the escape. 0% is vanilla escape rate, 100% is impossible to escape. Consider enabling UseNormalEscapeOnHard if you tweak this to keep reasonable escape odds.");
         s_cfgFastRetreatHigherRate = s_cfgCategoryMain.CreateEntry<float>("FastRetreatHigherRate", 0.0f, "Higher Fast Retreat escape rate", description: "Increase the odds of escaping with Fast Retreat. If the escape should fail, you get an additional x% percent chance to succeed escaping the battle. 100% makes the skill always work.");
 
@@ -66,7 +68,9 @@ public class EscapeOnHardMod : MelonMod
             }
 
             // If the escape is supposed to be successful then reroll with alternate probabilities
-            if (__result == 1)
+            // only if we want it to happen anytime, or if we want it to happen only in hard and we 
+            // are in temporary normal mode (=in hard the rest of the time)
+            if (__result == 1 && (!s_cfgLowerEscapeRateHardOnly.Value || s_temporaryNormalMode))
             {
                 bool escapedSecondRoll = MelonUtils.RandomDouble() * 100 <= (double)s_cfgLowerEscapeRate.Value;
                 __result = escapedSecondRoll ? 0 : 1;
