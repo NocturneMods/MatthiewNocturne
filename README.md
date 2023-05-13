@@ -11,6 +11,20 @@ Please put these dlls in a `_dlls` folder at the root of the solution :
 - `smt3hd\MelonLoader\Dependencies\Il2CppAssemblyGenerator\0Harmony.dll`
 - `smt3hd\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll`
 
+# Mods
+
+## Bonus / Non-canonical mods
+
+List of standalone mods that won't be part of the modpack (fate to be determined):
+- PiercingMagmaAxis
+- UncappedMagic
+- DanteOnNewGamePlus 
+- OneMoreAllyPressTurn 
+
+## Modpack content
+
+Everything else.
+
 # TODO
 
 ## Unsupported variants
