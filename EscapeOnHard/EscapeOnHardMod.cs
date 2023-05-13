@@ -30,7 +30,7 @@ public class EscapeOnHardMod : MelonMod
         Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("EscapeOnHard");
-        s_cfgUseNormalEscapeOnHard = s_cfgCategoryMain.CreateEntry<bool>("UseNormalEscapeOnHard", false, "Use Normal difficulty escape rate in Hard difficulty.");
+        s_cfgUseNormalEscapeOnHard = s_cfgCategoryMain.CreateEntry<bool>("UseNormalEscapeOnHard", false, "Normal difficulty escape rate in Hard", description: "Use Normal difficulty escape rate in Hard difficulty");
         s_cfgLowerEscapeRateHardOnly = s_cfgCategoryMain.CreateEntry<bool>("LowerEscapeRateHardOnly", false, "Lower escape rate only in Hard", description: "Enables the lowers escape rate percentage only in hard mode.");
         s_cfgLowerEscapeRate = s_cfgCategoryMain.CreateEntry<float>("LowerEscapeRate", 0.0f, "Lower escape rate", description: "Lowers the vanilla escape rate. If the escape should work you get an bonus x% chance to fail the escape. 0% is vanilla escape rate, 100% is impossible to escape. Consider enabling UseNormalEscapeOnHard if you tweak this to keep reasonable escape odds.");
         s_cfgFastRetreatHigherRate = s_cfgCategoryMain.CreateEntry<float>("FastRetreatHigherRate", 0.0f, "Higher Fast Retreat escape rate", description: "Increase the odds of escaping with Fast Retreat. If the escape should fail, you get an additional x% percent chance to succeed escaping the battle. 100% makes the skill always work.");
