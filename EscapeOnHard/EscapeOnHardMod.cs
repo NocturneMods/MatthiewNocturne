@@ -61,7 +61,7 @@ public class EscapeOnHardMod : MelonMod
         public static void Postfix(ref nbMainProcessData_t data, ref int __result)
         {
             // If Demi-fiend is the one escaping and he has Fast Retreat and he would fail the escape
-            if (data.activeunit == 0 && datCalc.datCheckSkillInParty(296) == 1 && __result == 0)
+            if (datCalc.datCheckSkillInParty(296) == 1 && __result == 0)
             {
                 bool escapedSecondRoll = MelonUtils.RandomDouble() * 100 <= (double)s_cfgFastRetreatHigherRate.Value;
                 __result = escapedSecondRoll ? 1 : 0;
