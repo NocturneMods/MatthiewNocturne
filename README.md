@@ -1,4 +1,6 @@
-Objective : make it easy to check Matthiew's Nocture Remaster mods, and compile them easily.
+**UNSTABLE DEV BRANCH** : adds support for configurations in various mods !
+
+Objective : make it easy to check Matthiew's Nocture Remaster mods, compile them easily, and add configuration support.
 
 # How to compile
 Please put these dlls in a `_dlls` folder at the root of the solution :
