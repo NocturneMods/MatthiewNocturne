@@ -182,7 +182,7 @@ dotnet_diagnostic.CA1012.severity = warning
 dotnet_diagnostic.CA1822.severity = warning
 
 # IDE0005: Using directive is unnecessary
-dotnet_diagnostic.IDE0005.severity = warning
+dotnet_diagnostic.IDE0005.severity = suggestion
 
 # dotnet_style_allow_multiple_blank_lines_experimental
 dotnet_diagnostic.IDE2000.severity = warning
