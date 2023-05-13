@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>ModernPressTurns</RootNamespace>
-    <AssemblyName>ModernPressTurns</AssemblyName>
+    <RootNamespace>AntiBecomesResist</RootNamespace>
+    <AssemblyName>AntiBecomesResist</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputPath>..\bin\</OutputPath>

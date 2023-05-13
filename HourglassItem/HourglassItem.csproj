@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>ModernPressTurns</RootNamespace>
-    <AssemblyName>ModernPressTurns</AssemblyName>
+    <RootNamespace>HourglassItem</RootNamespace>
+    <AssemblyName>HourglassItem</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputPath>..\bin\</OutputPath>
@@ -31,5 +31,6 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+
 
 </Project>

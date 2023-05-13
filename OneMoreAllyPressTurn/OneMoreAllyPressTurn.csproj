@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>ModernPressTurns</RootNamespace>
-    <AssemblyName>ModernPressTurns</AssemblyName>
+    <RootNamespace>OneMoreAllyPressTurn</RootNamespace>
+    <AssemblyName>OneMoreAllyPressTurn</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
+
 
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -31,5 +32,6 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+
 
 </Project>

@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>ModernPressTurns</RootNamespace>
-    <AssemblyName>ModernPressTurns</AssemblyName>
+    <RootNamespace>PiercingMagmaAxis</RootNamespace>
+    <AssemblyName>PiercingMagmaAxis</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
+
 
   <ItemGroup>
     <Reference Include="0Harmony">

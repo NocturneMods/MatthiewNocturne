@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>ModernPressTurns</RootNamespace>
-    <AssemblyName>ModernPressTurns</AssemblyName>
+    <RootNamespace>DisplayBuffs</RootNamespace>
+    <AssemblyName>DisplayBuffs</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputPath>..\bin\</OutputPath>
@@ -28,6 +28,10 @@
     </Reference>
     <Reference Include="MelonLoader">
       <HintPath>..\_dlls\MelonLoader.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\_dlls\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
