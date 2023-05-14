@@ -56,9 +56,9 @@ public class OneMoreEnemyPressTurnMod : MelonMod
             }
         }
     }
-    
+
     // List of enemies with an ID greater than 255 but that aren't bosses
-    private static readonly List<ushort> s_fakeBosses = new ()
+    private static readonly List<ushort> s_fakeBosses = new()
     {
         318, // Will o' Wisp (Tutorial)
         319, // Preta (Tutorial)
