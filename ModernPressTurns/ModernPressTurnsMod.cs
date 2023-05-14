@@ -16,7 +16,6 @@ public class ModernPressTurnsMod : MelonMod
 
     private static MelonPreferences_Category s_cfgCategoryMain = null!;
     private static MelonPreferences_Entry<bool> s_cfgSmt5HalfPtBehaviour = null!;
-    private static MelonPreferences_Entry<bool> s_cfgPassCostsHalfPt = null!;
     private static MelonPreferences_Entry<bool> s_cfgDismissCostsHalfPt = null!;
     private static MelonPreferences_Entry<bool> s_cfgSummonCostsHalfPt = null!;
     private static MelonPreferences_Entry<bool> s_cfgAnalyzeCostsHalfPt = null!;
@@ -27,7 +26,6 @@ public class ModernPressTurnsMod : MelonMod
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("ModernPressTurns");
         s_cfgSmt5HalfPtBehaviour = s_cfgCategoryMain.CreateEntry<bool>("Smt5HalfPtBehaviour", false, "SMTV Half press turns behaviour", description: "Use SMTV press turn behaviour : for half PT consumption, prioritize available full PTs and only consume press turns when there are none full available.");
-        s_cfgPassCostsHalfPt = s_cfgCategoryMain.CreateEntry<bool>("PassCostsHalfPt", false, "Pass costs half a press turn", description: "Using Pass in combat consumes only a half press turn.");
         s_cfgDismissCostsHalfPt = s_cfgCategoryMain.CreateEntry<bool>("DismissCostsHalfPt", false, "Dismiss costs half a press turn", description: "Dismissing a demon in combat consumes only a half press turn.");
         s_cfgSummonCostsHalfPt = s_cfgCategoryMain.CreateEntry<bool>("SummonCostsHalfPt", false, "Summon costs half a press turn", description: "Summoning a demon in combat consumes only a half press turn.");
         s_cfgAnalyzeCostsHalfPt = s_cfgCategoryMain.CreateEntry<bool>("AnalyzeCostsHalfPt", false, "The Analyze skill costs half a press turn", description: "Using the Analyze skill consumes only a half press turn.");
@@ -43,7 +41,7 @@ public class ModernPressTurnsMod : MelonMod
         public static void Prefix()
         {
             // Only proceed if the configuration requires it
-            if (!s_cfgPassCostsHalfPt.Value)
+            if (!s_cfgSmt5HalfPtBehaviour.Value)
             {
                 return;
             }
@@ -164,7 +162,12 @@ public class ModernPressTurnsMod : MelonMod
             // If there is at least one full press turn
             if (nbMainProcess.nbGetMainProcessData().press4_p != 0)
             {
-                PressTurnsAdjustements.SecondaryFullToBlinking(); // Only this line is required as the game consumes the press turn AFTER this is called
+                // If no blinking pressturn (= if blinking, let the game consume it)
+                // OR if we want the SMT5-type half PT behaviour
+                if (nbMainProcess.nbGetMainProcessData().press4_p == nbMainProcess.nbGetMainProcessData().press4_ten || s_cfgSmt5HalfPtBehaviour.Value)
+                {
+                    PressTurnsAdjustements.SecondaryFullToBlinking(); // Only this line is required as the game consumes the press turn AFTER this is called
+                }
             }
         }
     }
