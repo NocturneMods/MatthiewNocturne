@@ -36,7 +36,6 @@ In bold, the only currently supported variant:
 - FocusMagic (**standalone** / fixed focus compatible)
 - PierceWithoutTde (**80** / 90)
 - TruePierce (**phys including repel** / everything / phys+magic / phys+magic no repel)
-- OneMoreEnemyPressTurn (**all enemies** / bosses only / normal enemies only)
 - DisplayFutureSkills (**spoilers** / no spoilers)
 - ModernPressTurns (**SMT V** / SMT IV)
 - EveryoneGetsExp (**25%** / 50% / 75% / 100%)
