@@ -24,8 +24,8 @@ public class OneMoreEnemyPressTurnMod : MelonMod
         Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("OneMoreEnemyPressTurn");
-        s_cfgMorePressTurnRegularEnemies = s_cfgCategoryMain.CreateEntry<int>("MorePressTurnRegularEnemies", 0, "Additional press turn count (regular enemies)", description: "");
-        s_cfgMorePressTurnBosses = s_cfgCategoryMain.CreateEntry<int>("MorePressTurnBosses", 0, "Additional press turn count (bosses)", description: "In hard difficulty, items will cost their vanilla price multiplied by this value. (default: x3)");
+        s_cfgMorePressTurnRegularEnemies = s_cfgCategoryMain.CreateEntry<int>("MorePressTurnRegularEnemies", 0, "Additional press turn count (regular enemies)", description: "Additional press turn count (regular enemies)");
+        s_cfgMorePressTurnBosses = s_cfgCategoryMain.CreateEntry<int>("MorePressTurnBosses", 0, "Additional press turn count (bosses)", description: "Additional press turn count (bosses)");
 
         s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgCategoryMain.SaveToFile();
