@@ -13,7 +13,6 @@ public class FocusMagicMod : MelonMod
 {
     private static bool s_isHealing = false;
 
-
     private static bool IsFixedFocusModUsed()
     {
         foreach (var melon in Melon<FocusMagicMod>.Instance.MelonAssembly.LoadedMelons)
@@ -63,6 +62,7 @@ public class FocusMagicMod : MelonMod
                     // Removes Focus if there isn't already a mod doing it.
                     nbMainProcess.nbGetPartyFromFormindex(formindex).count[15] = 0;
                 }
+
                 __result *= 2.5f; // Multiplies damage by 2.5
             }
         }
