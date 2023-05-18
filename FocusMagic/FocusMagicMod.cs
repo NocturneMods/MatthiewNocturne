@@ -13,6 +13,19 @@ public class FocusMagicMod : MelonMod
 {
     private static bool s_isHealing = false;
 
+    private static bool IsFixedFocusModUsed()
+    {
+        foreach (var melon in Melon<FocusMagicMod>.Instance.MelonAssembly.LoadedMelons)
+        {
+            if (melon.Info.Name.StartsWith("Fixed Focus"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // Before using a magic attack
     [HarmonyPatch(typeof(nbCalc), nameof(nbCalc.nbGetMagicAttack))]
     private class Patch
@@ -44,7 +57,12 @@ public class FocusMagicMod : MelonMod
             // If the game is checking for the presence of magic buff (5) and the demon has focused (15)
             if (type == 5 && nbMainProcess.nbGetPartyFromFormindex(formindex).count[15] == 1 && !s_isHealing)
             {
-                nbMainProcess.nbGetPartyFromFormindex(formindex).count[15] = 0; // Removes Focus
+                if (!IsFixedFocusModUsed())
+                {
+                    // Removes Focus if there isn't already a mod doing it.
+                    nbMainProcess.nbGetPartyFromFormindex(formindex).count[15] = 0;
+                }
+
                 __result *= 2.5f; // Multiplies damage by 2.5
             }
         }
