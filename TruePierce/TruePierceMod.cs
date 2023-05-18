@@ -13,6 +13,7 @@ namespace TruePierce;
 public class TruePierceMod : MelonMod
 {
     public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "TruePierce.cfg");
+    private const bool DisplaySelfDestructInDesc = false;
 
     private static MelonPreferences_Category s_cfgCategoryMain = null!;
     private static MelonPreferences_Entry<bool> s_cfgAllowRepel = null!;
@@ -85,6 +86,13 @@ public class TruePierceMod : MelonMod
             return "All attacks";
         }
 
+        // Physical
+        if (truePieceElements.Contains(0))
+        {
+            qualifiers.Add("Physical");
+        }
+
+        // Magic
         int magicalTypesTruePierced = new int[] { 1, 2, 3, 4, 5 }.Except(truePieceElements).Count();
         if (magicalTypesTruePierced == 5)
         {
@@ -122,6 +130,21 @@ public class TruePierceMod : MelonMod
             qualifiers.Add(string.Join("/", magic));
         }
 
+        // Light / Dark
+        if (truePieceElements.Contains(6) && truePieceElements.Contains(7))
+        {
+            qualifiers.Add("Light/Dark");
+        }
+        else if (truePieceElements.Contains(6))
+        {
+            qualifiers.Add("Light");
+        }
+        else if (truePieceElements.Contains(7))
+        {
+            qualifiers.Add("Dark");
+        }
+
+        // Ailments
         int ailmentsTypesTruePierced = new int[] { 8, 9, 10 }.Except(truePieceElements).Count();
         if (ailmentsTypesTruePierced == 3)
         {
@@ -149,14 +172,10 @@ public class TruePierceMod : MelonMod
             qualifiers.Add(string.Join("/", ailments));
         }
 
-        if (truePieceElements.Contains(11))
+        // Self destruct
+        if (DisplaySelfDestructInDesc && truePieceElements.Contains(11))
         {
             qualifiers.Add("Self-Destruct");
-        }
-
-        if (truePieceElements.Contains(0))
-        {
-            qualifiers.Insert(0, "Physical");
         }
 
         string desc = "";
