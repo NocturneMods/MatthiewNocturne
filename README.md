@@ -30,7 +30,6 @@ Everything else.
 ## Unsupported variants
 
 In bold, the only currently supported variant:
-- BetterNewGamePlus (**magatama+items+demons+macca** / demons / items / macca / magatama / nothing)
 - PiercingMagmaAxis (**including repel** / no repel)
 - NormalPricesOnHard (**normal prices** / double prices)
 - FocusMagic (**standalone** / fixed focus compatible)
