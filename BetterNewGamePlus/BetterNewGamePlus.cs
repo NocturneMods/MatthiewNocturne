@@ -26,12 +26,11 @@ public class BetterNewGamePlusMod : MelonMod
         Key,
     }
 
-
     public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "BetterNewGamePlus.cfg");
 
     private static MelonPreferences_Category s_cfgCategoryMain = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepItems = null!;
-    private static MelonPreferences_Entry<NgpKeepItemsType> s_cfgKeepItemsType = null!; 
+    private static MelonPreferences_Entry<NgpKeepItemsType> s_cfgKeepItemsType = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepMacca = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepMagatama = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepDemons = null!;
