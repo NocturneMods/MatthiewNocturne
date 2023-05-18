@@ -16,7 +16,6 @@ public class BetterNewGamePlusMod : MelonMod
     public enum NgpActivationCondition
     {
         Disabled,
-        Hooded,
         Leather,
         Always,
     }
@@ -24,8 +23,8 @@ public class BetterNewGamePlusMod : MelonMod
     public enum NgpKeepItemsType
     {
         All,
-        Key
-    },
+        Key,
+    }
 
 
     public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "BetterNewGamePlus.cfg");
@@ -50,22 +49,80 @@ public class BetterNewGamePlusMod : MelonMod
         Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("BetterNewGamePlus");
-        s_cfgKeepItems = s_cfgCategoryMain.CreateEntry("KeepItems", NgpActivationCondition.Disabled, "Keep items on NG+", description: "Keep items on NG+ (Disabled/Hooded/Leather/Always)");
+        s_cfgKeepItems = s_cfgCategoryMain.CreateEntry("KeepItems", NgpActivationCondition.Disabled, "Keep items on NG+", description: "Keep items on NG+ (Disabled/Leather/Always)");
         s_cfgKeepItemsType = s_cfgCategoryMain.CreateEntry("KeepItemsType", NgpKeepItemsType.All, "Item type to keep", description: "The type of items to keep if the option is enabled. (All/Key)");
-        s_cfgKeepMacca = s_cfgCategoryMain.CreateEntry("KeepMacca", NgpActivationCondition.Disabled, "Keep macca on NG+", description: "Keep macca on NG+ (Disabled/Hooded/Leather/Always)");
-        s_cfgKeepMagatama = s_cfgCategoryMain.CreateEntry("KeepMagatama", NgpActivationCondition.Disabled, "Keep magatama on NG+", description: "Keep magatama on NG+ (Disabled/Hooded/Leather/Always)");
-        s_cfgKeepDemons = s_cfgCategoryMain.CreateEntry("KeepDemons", NgpActivationCondition.Disabled, "Keep demons on NG+", description: "Keep demons on NG+ (Disabled/Hooded/Leather/Always)");
-        s_cfgKeepMaxStock = s_cfgCategoryMain.CreateEntry("KeepMaxStock", NgpActivationCondition.Disabled, "Keep max stock size on NG+", description: "Keep max stock size on NG+, forcibly enabled if KeepDemons is enabled. (Disabled/Hooded/Leather/Always)");
+        s_cfgKeepMacca = s_cfgCategoryMain.CreateEntry("KeepMacca", NgpActivationCondition.Disabled, "Keep macca on NG+", description: "Keep macca on NG+ (Disabled/Leather/Always)");
+        s_cfgKeepMagatama = s_cfgCategoryMain.CreateEntry("KeepMagatama", NgpActivationCondition.Disabled, "Keep magatama on NG+", description: "Keep magatama on NG+ (Disabled/Leather/Always)");
+        s_cfgKeepDemons = s_cfgCategoryMain.CreateEntry("KeepDemons", NgpActivationCondition.Disabled, "Keep demons on NG+", description: "Keep demons on NG+ (Disabled/Leather/Always)");
+        s_cfgKeepMaxStock = s_cfgCategoryMain.CreateEntry("KeepMaxStock", NgpActivationCondition.Disabled, "Keep max stock size on NG+", description: "Keep max stock size on NG+, forcibly enabled if KeepDemons is enabled. (Disabled/Leather/Always)");
 
         s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgCategoryMain.SaveToFile();
     }
 
-    private static bool IsConditionMet(NgpActivationCondition cdt, bool leatherJacket)
+    private static bool IsCursedGospelModUsed()
     {
-        return cdt == NgpActivationCondition.Always
-            || cdt == NgpActivationCondition.Leather && leatherJacket
-            || cdt == NgpActivationCondition.Hooded == !leatherJacket;
+        foreach (var melon in Melon<BetterNewGamePlusMod>.Instance.MelonAssembly.LoadedMelons)
+        {
+            if (melon.Info.Name.Contains("Cursed Gospel") && melon.Info.Author.Contains("Matthiew Purple"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static void RestoreAsSpecified(NgpActivationCondition currentCase)
+    {
+        if (s_cfgKeepMaxStock.Value == currentCase)
+        {
+            dds3GlobalWork.DDS3_GBWK.maxstock = 12;
+        }
+
+        // If keeping demons
+        if (s_cfgKeepDemons.Value == currentCase)
+        {
+            dds3GlobalWork.DDS3_GBWK.unitwork = s_partyList; // Demi-fiend and his demons in party and stock
+            dds3GlobalWork.DDS3_GBWK.maxstock = 12; // Maximum number of slots in stock
+            dds3GlobalWork.DDS3_GBWK.stockcnt = s_stockCount; // Number of demons in stock
+            dds3GlobalWork.DDS3_GBWK.stocklist = s_stockList; // Demons in stock
+        }
+
+        // If keeping items
+        if (s_cfgKeepItems.Value == currentCase)
+        {
+            if (s_cfgKeepItemsType.Value == NgpKeepItemsType.All)
+            {
+                dds3GlobalWork.DDS3_GBWK.item = s_itemList; // Items
+            }
+            else if (s_cfgKeepItemsType.Value == NgpKeepItemsType.Key)
+            {
+                dds3GlobalWork.DDS3_GBWK.item[12] = s_itemList[12]; // Chakra Elixir
+                dds3GlobalWork.DDS3_GBWK.item[44] = s_itemList[44]; // Blessed Fan
+                dds3GlobalWork.DDS3_GBWK.item[45] = s_itemList[45]; // Soul Return
+                dds3GlobalWork.DDS3_GBWK.item[46] = s_itemList[46]; // Spyglass
+                if (IsCursedGospelModUsed())
+                {
+                    dds3GlobalWork.DDS3_GBWK.item[60] = s_itemList[60]; // Cursed Gospel (mod)
+                }
+            }
+        }
+
+        // If keeping macca
+        if (s_cfgKeepMacca.Value == currentCase)
+        {
+            dds3GlobalWork.DDS3_GBWK.maka = s_macca; // Macca
+        }
+
+        // If keeping magatama
+        if (s_cfgKeepMagatama.Value == currentCase)
+        {
+            foreach (byte item in s_magatamaList) // Collected Magatama
+            {
+                datCalc.datAddHearts(item);
+            }
+        }
     }
 
     // When destroying a savefile for a NG+
@@ -93,7 +150,7 @@ public class BetterNewGamePlusMod : MelonMod
     {
         public static void Postfix()
         {
-
+            RestoreAsSpecified(NgpActivationCondition.Always);
         }
     }
 
@@ -106,40 +163,9 @@ public class BetterNewGamePlusMod : MelonMod
             // If the leather jacket was selected
             bool leatherJacket = no == 2224;
 
-            // If keeping stock
-            if (IsConditionMet(s_cfgKeepMaxStock.Value, leatherJacket))
+            if (leatherJacket)
             {
-                dds3GlobalWork.DDS3_GBWK.maxstock = 12;
-            }
-
-            // If keeping demons
-            if (IsConditionMet(s_cfgKeepDemons.Value, leatherJacket))
-            {
-                dds3GlobalWork.DDS3_GBWK.unitwork = s_partyList; // Demi-fiend and his demons in party and stock
-                dds3GlobalWork.DDS3_GBWK.maxstock = 12; // Maximum number of slots in stock
-                dds3GlobalWork.DDS3_GBWK.stockcnt = s_stockCount; // Number of demons in stock
-                dds3GlobalWork.DDS3_GBWK.stocklist = s_stockList; // Demons in stock
-            }
-
-            // If keeping items
-            if (IsConditionMet(s_cfgKeepItems.Value, leatherJacket))
-            {
-                dds3GlobalWork.DDS3_GBWK.item = s_itemList; // Items
-            }
-
-            // If keeping macca
-            if (IsConditionMet(s_cfgKeepMacca.Value, leatherJacket))
-            {
-                dds3GlobalWork.DDS3_GBWK.maka = s_macca; // Macca
-            }
-
-            // If keeping magatama
-            if (IsConditionMet(s_cfgKeepMagatama.Value, leatherJacket))
-            {
-                foreach (byte item in s_magatamaList) // Collected Magatama
-                {
-                    datCalc.datAddHearts(item);
-                }
+                RestoreAsSpecified(NgpActivationCondition.Leather);
             }
         }
     }
