@@ -15,22 +15,16 @@ public class BetterNewGamePlusMod : MelonMod
 {
     public enum NgpActivationCondition
     {
-        Disabled,
+        Never,
         Leather,
         Always,
-    }
-
-    public enum NgpKeepItemsType
-    {
-        All,
-        Key,
     }
 
     public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "BetterNewGamePlus.cfg");
 
     private static MelonPreferences_Category s_cfgCategoryMain = null!;
-    private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepItems = null!;
-    private static MelonPreferences_Entry<NgpKeepItemsType> s_cfgKeepItemsType = null!;
+    private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepItemsAll = null!;
+    private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepItemsKey = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepMacca = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepMagatama = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepDemons = null!;
@@ -48,12 +42,12 @@ public class BetterNewGamePlusMod : MelonMod
         Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("BetterNewGamePlus");
-        s_cfgKeepItems = s_cfgCategoryMain.CreateEntry("KeepItems", NgpActivationCondition.Disabled, "Keep items on NG+", description: "Keep items on NG+ (Disabled/Leather/Always)");
-        s_cfgKeepItemsType = s_cfgCategoryMain.CreateEntry("KeepItemsType", NgpKeepItemsType.All, "Item type to keep", description: "The type of items to keep if the option is enabled. (All/Key)");
-        s_cfgKeepMacca = s_cfgCategoryMain.CreateEntry("KeepMacca", NgpActivationCondition.Disabled, "Keep macca on NG+", description: "Keep macca on NG+ (Disabled/Leather/Always)");
-        s_cfgKeepMagatama = s_cfgCategoryMain.CreateEntry("KeepMagatama", NgpActivationCondition.Disabled, "Keep magatama on NG+", description: "Keep magatama on NG+ (Disabled/Leather/Always)");
-        s_cfgKeepDemons = s_cfgCategoryMain.CreateEntry("KeepDemons", NgpActivationCondition.Disabled, "Keep demons on NG+", description: "Keep demons on NG+ (Disabled/Leather/Always)");
-        s_cfgKeepMaxStock = s_cfgCategoryMain.CreateEntry("KeepMaxStock", NgpActivationCondition.Disabled, "Keep max stock size on NG+", description: "Keep max stock size on NG+, forcibly enabled if KeepDemons is enabled. (Disabled/Leather/Always)");
+        s_cfgKeepItemsAll = s_cfgCategoryMain.CreateEntry("KeepItemsAll", NgpActivationCondition.Never, "Keep items on NG+", description: "Keep all items on NG+ (Never/Leather/Always)");
+        s_cfgKeepItemsKey = s_cfgCategoryMain.CreateEntry("KeepItemsKey", NgpActivationCondition.Never, "Keep items on NG+", description: "Keep only key items on NG+ (Never/Leather/Always), overriden by KeepItemsAll if both have the same activation condition.");
+        s_cfgKeepMacca = s_cfgCategoryMain.CreateEntry("KeepMacca", NgpActivationCondition.Never, "Keep macca on NG+", description: "Keep macca on NG+ (Never/Leather/Always)");
+        s_cfgKeepMagatama = s_cfgCategoryMain.CreateEntry("KeepMagatama", NgpActivationCondition.Never, "Keep magatama on NG+", description: "Keep magatama on NG+ (Never/Leather/Always)");
+        s_cfgKeepDemons = s_cfgCategoryMain.CreateEntry("KeepDemons", NgpActivationCondition.Never, "Keep demons on NG+", description: "Keep demons on NG+ (Never/Leather/Always)");
+        s_cfgKeepMaxStock = s_cfgCategoryMain.CreateEntry("KeepMaxStock", NgpActivationCondition.Never, "Keep max stock size on NG+", description: "Keep max stock size on NG+ (Never/Leather/Always), forcibly enabled if KeepDemons has the same activation condition.");
 
         s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgCategoryMain.SaveToFile();
@@ -88,23 +82,21 @@ public class BetterNewGamePlusMod : MelonMod
             dds3GlobalWork.DDS3_GBWK.stocklist = s_stockList; // Demons in stock
         }
 
-        // If keeping items
-        if (s_cfgKeepItems.Value == currentCase)
+        // If keeping all items
+        if (s_cfgKeepItemsAll.Value == currentCase)
         {
-            if (s_cfgKeepItemsType.Value == NgpKeepItemsType.All)
+            dds3GlobalWork.DDS3_GBWK.item = s_itemList; // Items
+        }
+        // If keeping key items only
+        else if (s_cfgKeepItemsKey.Value == currentCase)
+        {
+            dds3GlobalWork.DDS3_GBWK.item[12] = s_itemList[12]; // Chakra Elixir
+            dds3GlobalWork.DDS3_GBWK.item[44] = s_itemList[44]; // Blessed Fan
+            dds3GlobalWork.DDS3_GBWK.item[45] = s_itemList[45]; // Soul Return
+            dds3GlobalWork.DDS3_GBWK.item[46] = s_itemList[46]; // Spyglass
+            if (IsCursedGospelModUsed())
             {
-                dds3GlobalWork.DDS3_GBWK.item = s_itemList; // Items
-            }
-            else if (s_cfgKeepItemsType.Value == NgpKeepItemsType.Key)
-            {
-                dds3GlobalWork.DDS3_GBWK.item[12] = s_itemList[12]; // Chakra Elixir
-                dds3GlobalWork.DDS3_GBWK.item[44] = s_itemList[44]; // Blessed Fan
-                dds3GlobalWork.DDS3_GBWK.item[45] = s_itemList[45]; // Soul Return
-                dds3GlobalWork.DDS3_GBWK.item[46] = s_itemList[46]; // Spyglass
-                if (IsCursedGospelModUsed())
-                {
-                    dds3GlobalWork.DDS3_GBWK.item[60] = s_itemList[60]; // Cursed Gospel (mod)
-                }
+                dds3GlobalWork.DDS3_GBWK.item[60] = s_itemList[60]; // Cursed Gospel (mod)
             }
         }
 
