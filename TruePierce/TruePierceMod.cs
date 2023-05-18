@@ -15,6 +15,7 @@ public class TruePierceMod : MelonMod
     public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "TruePierce.cfg");
 
     private static MelonPreferences_Category s_cfgCategoryMain = null!;
+    private static MelonPreferences_Entry<bool> s_cfgAllowRepel = null!;
     private static MelonPreferences_Entry<bool> s_cfgPhysical = null!;
     private static MelonPreferences_Entry<bool> s_cfgFire = null!;
     private static MelonPreferences_Entry<bool> s_cfgIce = null!;
@@ -35,6 +36,7 @@ public class TruePierceMod : MelonMod
         Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("TruePierce");
+        s_cfgAllowRepel = s_cfgCategoryMain.CreateEntry("AllowRepel", false, "Allow true pierce with repels", description: "Allow True Pierce with repels.");
         s_cfgPhysical = s_cfgCategoryMain.CreateEntry("Physical", false, "Physical true pierce", description: "Allow True Pierce with Physical attacks.");
         s_cfgFire = s_cfgCategoryMain.CreateEntry("Fire", false, "Fire true pierce", description: "Allow True Pierce with Fire attacks.");
         s_cfgIce = s_cfgCategoryMain.CreateEntry("Ice", false, "Ice true pierce", description: "Allow True Pierce with Ice attacks.");
@@ -201,11 +203,12 @@ public class TruePierceMod : MelonMod
     [HarmonyPatch(typeof(nbCalc), nameof(nbCalc.nbGetAisyo))]
     private class Patch2
     {
-        public static void Postfix(ref uint __result, ref int attr)
+        public static void Postfix(ref uint __result, ref int attr, ref int formindex, ref int nskill)
         {
             // If the attack has Pierce (or equivalent) and the attack is physical and it's resisted/blocked/drained/repelled
             bool isTypeTruePierce = IsTruePierceEnabled(attr);
-            if (s_hasPierce && isTypeTruePierce && (__result < 100 || (__result >= 65536 && __result < 2147483648)))
+            bool isRepel = nskill == -1;
+            if (s_hasPierce && isTypeTruePierce && (!isRepel || s_cfgAllowRepel.Value) && (__result < 100 || (__result >= 65536 && __result < 2147483648)))
             {
                 __result = 100; // Forces the affinity to become "neutral"
                 nbMainProcess.nbGetMainProcessData().d31_kantuu = 1; // Displays the "Pierced!" message
