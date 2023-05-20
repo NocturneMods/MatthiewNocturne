@@ -49,7 +49,7 @@ public class TruePierceMod : MelonMod
         s_cfgCurse = s_cfgCategoryMain.CreateEntry("Curse", false, "Curse true pierce", description: "Allow True Pierce with Curse attacks.");
         s_cfgNerve = s_cfgCategoryMain.CreateEntry("Nerve", false, "Nerve true pierce", description: "Allow True Pierce with Nerve attacks.");
         s_cfgMind = s_cfgCategoryMain.CreateEntry("Mind", false, "Mind true pierce", description: "Allow True Pierce with Mind attacks.");
-        s_cfgSelfDestruct = s_cfgCategoryMain.CreateEntry("SelfDestruct", false, "SelfDestruct true pierce", description: "Allow True Pierce with SelfDestruct attacks.");
+        s_cfgSelfDestruct = s_cfgCategoryMain.CreateEntry("SelfDestruct", false, "SelfDestruct true pierce", description: "Allow True Pierce with SelfDestruct attacks (really is a separate element, =/= almighty).");
 
         s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgCategoryMain.SaveToFile();
@@ -94,12 +94,12 @@ public class TruePierceMod : MelonMod
 
         // Magic
         int magicalTypesTruePierced = new int[] { 1, 2, 3, 4, 5 }.Except(truePieceElements).Count();
-        if (magicalTypesTruePierced == 5)
+        if (magicalTypesTruePierced == 0)
         {
             // All magic types
             qualifiers.Add("Magic");
         }
-        else if (magicalTypesTruePierced > 0)
+        else if (magicalTypesTruePierced < 5)
         {
             var magic = new List<string>();
             if (truePieceElements.Contains(1))
@@ -146,12 +146,12 @@ public class TruePierceMod : MelonMod
 
         // Ailments
         int ailmentsTypesTruePierced = new int[] { 8, 9, 10 }.Except(truePieceElements).Count();
-        if (ailmentsTypesTruePierced == 3)
+        if (ailmentsTypesTruePierced == 0)
         {
             // All ailments types
             qualifiers.Add("Ailment");
         }
-        else if (ailmentsTypesTruePierced > 0)
+        else if (ailmentsTypesTruePierced < 3)
         {
             var ailments = new List<string>();
             if (truePieceElements.Contains(8))
@@ -243,7 +243,10 @@ public class TruePierceMod : MelonMod
         {
             if (id == 357)
             {
-                __result = $"{GetTruePierceElementsDescription()} \nignore all resistances."; // New skill description for Pierce
+                var desc = GetTruePierceElementsDescription();
+
+                var finalLine = s_cfgAllowRepel.Value ? "attacks ignore all resistances." : desc.Contains('\n') ? "ignore all resistances except Repel." : "attacks ignore all resistances \nexcept Repel.";
+                __result = $"{desc} \n{finalLine}"; // New skill description for Pierce
             }
         }
     }
