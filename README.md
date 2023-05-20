@@ -38,4 +38,3 @@ In bold, the only currently supported variant:
 - PierceWithoutTde (**80** / 90)
 - TruePierce (**phys including repel** / everything / phys+magic / phys+magic no repel)
 - OneMoreEnemyPressTurn (**all enemies** / bosses only / normal enemies only)
-- ModernPressTurns (**SMT V** / SMT IV)
