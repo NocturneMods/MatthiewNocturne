@@ -3,14 +3,38 @@
 using HarmonyLib;
 using Il2Cpp;
 using MelonLoader;
+using MelonLoader.Utils;
 using PierceWithoutTde;
 
-[assembly: MelonInfo(typeof(PierceWithoutTdeMod), "Pierce without TDE (ver. 0.6)", "1.0.1", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(PierceWithoutTdeMod), "Pierce without TDE (ver. 0.6)", "2.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace PierceWithoutTde;
 public class PierceWithoutTdeMod : MelonMod
 {
+    public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "PierceWithoutTde.cfg");
+
+    private static MelonPreferences_Category s_cfgCategoryMain = null!;
+    private static MelonPreferences_Entry<byte> s_cfgUnlockLevelCustom = null!;
+    private static MelonPreferences_Entry<byte> s_cfgUnlockLevelVanilla = null!;
+
+    public override void OnInitializeMelon()
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
+
+        s_cfgCategoryMain = MelonPreferences.CreateCategory("PierceWithoutTde");
+        s_cfgUnlockLevelCustom = s_cfgCategoryMain.CreateEntry<byte>("UnlockLevelCustom", 255, "Unlock level of Pierce", description: "Unlock level of Pierce without any condition.");
+        s_cfgUnlockLevelVanilla = s_cfgCategoryMain.CreateEntry<byte>("UnlockLevelVanilla", 21, "Vanilla unlock level of Pierce", description: "Unlock level of Pierce in vanilla setting.");
+
+        s_cfgCategoryMain.SetFilePath(ConfigPath);
+        s_cfgCategoryMain.SaveToFile();
+
+        if (s_cfgUnlockLevelCustom.Value > 0)
+        {
+            tblHearts.fclHeartsTbl[1].Skill[5].TargetLevel = s_cfgUnlockLevelCustom.Value; // Make Pierce obtainable at level 80 instead of level 21
+        }
+    }
+
     // After checking for a flag state
     [HarmonyPatch(typeof(EventBit), nameof(EventBit.evtBitCheck))]
     private class Patch
@@ -26,15 +50,9 @@ public class PierceWithoutTdeMod : MelonMod
                 }
                 else
                 {
-                    tblHearts.fclHeartsTbl[1].Skill[5].TargetLevel = 21; // If unlocked normally, you can get it early
+                    tblHearts.fclHeartsTbl[1].Skill[5].TargetLevel = s_cfgUnlockLevelVanilla.Value; // If unlocked normally, you can get it early
                 }
             }
         }
-    }
-
-    // When booting the game
-    public override void OnInitializeMelon()
-    {
-        tblHearts.fclHeartsTbl[1].Skill[5].TargetLevel = 80; // Make Pierce obtainable at level 80 instead of level 21
     }
 }

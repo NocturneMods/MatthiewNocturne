@@ -4,13 +4,51 @@ using FixedJavelinRainXerosBeat;
 using HarmonyLib;
 using Il2Cpp;
 using MelonLoader;
+using MelonLoader.Utils;
 
-[assembly: MelonInfo(typeof(FixedJavelinRainXerosBeatMod), "Fixed Javelin Rain and Xeros Beat", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(FixedJavelinRainXerosBeatMod), "Fixed Javelin Rain and Xeros Beat", "1.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace FixedJavelinRainXerosBeat;
 public class FixedJavelinRainXerosBeatMod : MelonMod
 {
+    public static readonly string ConfigPath = Path.Combine(MelonEnvironment.UserDataDirectory, "ModsCfg", "FixedJavelinRainXerosBeat.cfg");
+
+    private static MelonPreferences_Category s_cfgCategoryMain = null!;
+    private static MelonPreferences_Entry<bool> s_cfgFix = null!;
+    private static MelonPreferences_Entry<byte> s_cfgXerosBeatAilmentRate = null!;
+    private static MelonPreferences_Entry<byte> s_cfgJavelinRainAilmentRate = null!;
+
+    private const int JavelinId = 143;
+    private const int XerosId = 133;
+    private static int NewJavelinId => s_cfgFix.Value ? 133 : 143;
+    private static int NewXerosId => s_cfgFix.Value ? 143 : 133;
+
+    public override void OnInitializeMelon()
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
+
+        s_cfgCategoryMain = MelonPreferences.CreateCategory("FixedJavelinRainXerosBeat");
+        s_cfgFix = s_cfgCategoryMain.CreateEntry("Fix", false, "Fix Javelin Rain & Xeros Beat inversion", description: "Fix Javelin Rain & Xeros Beat inversion.");
+        s_cfgXerosBeatAilmentRate = s_cfgCategoryMain.CreateEntry<byte>("XerosBeatAilmentRate", 30, "Xeros Beat ailment rate", description: "Xeros Beat ailment rate");
+        s_cfgJavelinRainAilmentRate = s_cfgCategoryMain.CreateEntry<byte>("JavelinRainAilmentRate", 20, "Javelin Rain ailment rate", description: "Javelin Rain ailment rate");
+        s_cfgCategoryMain.SetFilePath(ConfigPath);
+        s_cfgCategoryMain.SaveToFile();
+
+        // Swaps the "datNormalSkills" objects
+        (datNormalSkill.tbl[NewXerosId], datNormalSkill.tbl[NewJavelinId]) = (datNormalSkill.tbl[XerosId], datNormalSkill.tbl[JavelinId]);
+
+        // Swaps the "datSkills" objects
+        (datSkill.tbl[NewXerosId], datSkill.tbl[NewJavelinId]) = (datSkill.tbl[XerosId], datSkill.tbl[JavelinId]);
+
+        // Swaps the Magatamas they belong to
+        (tblHearts.fclHeartsTbl[15].Skill[2], tblHearts.fclHeartsTbl[20].Skill[2]) = (tblHearts.fclHeartsTbl[20].Skill[2], tblHearts.fclHeartsTbl[15].Skill[2]);
+
+        // Buff their ailment rate
+        datNormalSkill.tbl[NewXerosId].badlevel = s_cfgXerosBeatAilmentRate.Value;
+        datNormalSkill.tbl[NewJavelinId].badlevel = s_cfgJavelinRainAilmentRate.Value;
+    }
+
     // Before getting the name of a skill
     [HarmonyPatch(typeof(datSkillName), nameof(datSkillName.Get))]
     private class Patch
@@ -18,13 +56,13 @@ public class FixedJavelinRainXerosBeatMod : MelonMod
         public static void Prefix(ref int id)
         {
             // Swaps the skills names
-            if (id == 133)
+            if (id == JavelinId)
             {
-                id = 143;
+                id = NewJavelinId;
             }
-            else if (id == 143)
+            else if (id == XerosId)
             {
-                id = 133;
+                id = NewXerosId;
             }
         }
     }
@@ -35,28 +73,15 @@ public class FixedJavelinRainXerosBeatMod : MelonMod
     {
         public static void Prefix(ref int id)
         {
-            // Swaps the skills descriptions
-            if (id == 133)
+            // Swaps the skills names
+            if (id == JavelinId)
             {
-                id = 143;
+                id = NewJavelinId;
             }
-            else if (id == 143)
+            else if (id == XerosId)
             {
-                id = 133;
+                id = NewXerosId;
             }
         }
-    }
-
-    // When launching the game
-    public override void OnInitializeMelon()
-    {
-        // Swaps the "datNormalSkills" objects
-        (datNormalSkill.tbl[143], datNormalSkill.tbl[133]) = (datNormalSkill.tbl[133], datNormalSkill.tbl[143]);
-
-        // Swaps the "datSkills" objects
-        (datSkill.tbl[143], datSkill.tbl[133]) = (datSkill.tbl[133], datSkill.tbl[143]);
-
-        // Swaps the Magatamas they belong to
-        (tblHearts.fclHeartsTbl[15].Skill[2], tblHearts.fclHeartsTbl[20].Skill[2]) = (tblHearts.fclHeartsTbl[20].Skill[2], tblHearts.fclHeartsTbl[15].Skill[2]);
     }
 }
