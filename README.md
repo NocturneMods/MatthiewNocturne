@@ -1,4 +1,6 @@
-Objective : make it easy to check Matthiew's Nocture Remaster mods, and compile them easily.
+**UNSTABLE DEV BRANCH** : adds support for configurations in various mods !
+
+Objective : make it easy to check Matthiew's Nocture Remaster mods, compile them easily, and add configuration support.
 
 # How to compile
 Please put these dlls in a `_dlls` folder at the root of the solution :
@@ -30,13 +32,8 @@ Everything else.
 ## Unsupported variants
 
 In bold, the only currently supported variant:
-- BetterNewGamePlus (**magatama+items+demons+macca** / demons / items / macca / magatama / nothing)
+- BetterNewGamePlus (**magatama+items+demons+macca** / demons / items / macca / magatama / nothing / modern)
 - PiercingMagmaAxis (**including repel** / no repel)
-- NormalPricesOnHard (**normal prices** / double prices)
 - FocusMagic (**standalone** / fixed focus compatible)
 - PierceWithoutTde (**80** / 90)
 - TruePierce (**phys including repel** / everything / phys+magic / phys+magic no repel)
-- DisplayFutureSkills (**spoilers** / no spoilers)
-- ModernPressTurns (**SMT V** / SMT IV)
-- EveryoneGetsExp (**25%** / 50% / 75% / 100%)
-- EscapeOnHard (**low** / normal)
