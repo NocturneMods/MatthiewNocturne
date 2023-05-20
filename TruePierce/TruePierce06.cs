@@ -20,10 +20,10 @@ public class TruePierceMod : MelonMod
         public static void Prefix(ref int sformindex, ref int nskill)
         {
             // If the skill in question is NOT a self-switch (from Zephhyr's mod) nor Analyze
-            if (nbMainProcess.nbGetUnitWorkFromFormindex(sformindex) != null && nskill != 71)
+            if (nbMainProcess.nbGetUnitWorkFromFormindex(sformindex) != null)
             {
                 // 357 = Pierce and 361 = Son's Oath/Raidou the Eternal
-                s_hasPierce = nbMainProcess.nbGetUnitWorkFromFormindex(sformindex).skill.Contains(357) || nbMainProcess.nbGetUnitWorkFromFormindex(sformindex).skill.Contains(361);
+                s_hasPierce = nskill != 71 && (nbMainProcess.nbGetUnitWorkFromFormindex(sformindex).skill.Contains(357) || nbMainProcess.nbGetUnitWorkFromFormindex(sformindex).skill.Contains(361));
             }
         }
     }
