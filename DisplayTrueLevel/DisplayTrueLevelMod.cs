@@ -4,6 +4,7 @@ using DisplayTrueLevel;
 using HarmonyLib;
 using Il2Cpp;
 using Il2Cppnewdata_H;
+using Il2CppTMPro;
 using MelonLoader;
 
 [assembly: MelonInfo(typeof(DisplayTrueLevelMod), "Display true level (0.6 ver.)", "1.0.0", "Matthiew Purple")]
@@ -55,17 +56,29 @@ public class DisplayTrueLevelMod : MelonMod
     {
         public static void Postfix()
         {
-            for (int i = 0; i < dds3GlobalWork.DDS3_GBWK.stocklist.Length; i++)
+            // For the party
+            for (int i = 1; i <= 4; i++)
             {
-                if (dds3GlobalWork.DDS3_GBWK.unitwork[i].level > 99 && dds3GlobalWork.DDS3_GBWK.unitwork[i].level != 255)
+                string name = cmpInit._campUIScr.transform.Find($"party/party_status/party_status{Utility.GetNumberForPath(i)}/Text_nameTM").gameObject.GetComponent<TextMeshProUGUI>().text;
+                name = Utility.RemoveMaterial(name);
+                ushort level = Utility.GetLevelFromName(name);
+                if (level > 99)
                 {
-                    cmpInit._campUIScr.transform.Find($"party/party_status/party_status{Utility.GetNumberForPath(i + 1)}/num_lv").gameObject.GetComponent<CounterCtr>().colorIndex = dds3GlobalWork.DDS3_GBWK.unitwork[i].level / 100 + 1;
-                    cmpInit._campUIScr.transform.Find($"party/party_status/party_status{Utility.GetNumberForPath(i + 1)}/num_lv").gameObject.GetComponent<CounterCtr>().Change();
+                    cmpInit._campUIScr.transform.Find($"party/party_status/party_status{Utility.GetNumberForPath(i)}/num_lv").gameObject.GetComponent<CounterCtr>().colorIndex = level / 100 + 1;
+                    cmpInit._campUIScr.transform.Find($"party/party_status/party_status{Utility.GetNumberForPath(i)}/num_lv").gameObject.GetComponent<CounterCtr>().Change();
                 }
-                else if (dds3GlobalWork.DDS3_GBWK.unitwork[i].level == 255)
+            }
+
+            // For the rest of the stock
+            for (int i = 1; i <= 12; i++)
+            {
+                string name = cmpInit._campUIScr.transform.Find($"party/party_status/stock_status{Utility.GetNumberForPath(i)}/Text_nameTM").gameObject.GetComponent<TextMeshProUGUI>().text;
+                name = Utility.RemoveMaterial(name);
+                ushort level = Utility.GetLevelFromName(name);
+                if (level > 99)
                 {
-                    cmpInit._campUIScr.transform.Find($"party/party_status/party_status{Utility.GetNumberForPath(i + 1)}/num_lv").gameObject.GetComponent<CounterCtr>().colorIndex = 6; // Displays 55 in black instead of red
-                    cmpInit._campUIScr.transform.Find($"party/party_status/party_status{Utility.GetNumberForPath(i + 1)}/num_lv").gameObject.GetComponent<CounterCtr>().Change();
+                    cmpInit._campUIScr.transform.Find($"party/party_status/stock_status{Utility.GetNumberForPath(i)}/num_lv").gameObject.GetComponent<CounterCtr>().colorIndex = level / 100 + 1;
+                    cmpInit._campUIScr.transform.Find($"party/party_status/stock_status{Utility.GetNumberForPath(i)}/num_lv").gameObject.GetComponent<CounterCtr>().Change();
                 }
             }
         }
@@ -84,6 +97,33 @@ public class DisplayTrueLevelMod : MelonMod
             {
                 return i.ToString();
             }
+        }
+
+        // Removes the beginning of the name (the material)
+        public static string RemoveMaterial(string text)
+        {
+            return text[(text.IndexOf(">") + 1)..];
+        }
+
+        // Returns level from name
+        public static ushort GetLevelFromName(string name)
+        {
+            // For each demon in the stock
+            foreach (datUnitWork_t work in dds3GlobalWork.DDS3_GBWK.unitwork)
+            {
+                if (datDevilName.Get(work.id) == name)
+                {
+                    return work.level; // Compares names
+                }
+            }
+
+            // Special case for Demi-fiend's nickname
+            if (frName.frGetCNameString(0) == name)
+            {
+                return dds3GlobalWork.DDS3_GBWK.unitwork[0].level;
+            }
+
+            return 0; // Not gonna happen
         }
     }
 }
