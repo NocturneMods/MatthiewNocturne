@@ -22,13 +22,13 @@ Some mods can be further configured (these), these will have Nocturne vanilla be
 | [BuyGeis](https://gamebanana.com/mods/381668) |  | |
 | [CursedGospel](https://gamebanana.com/mods/443167) |  | |
 | [DisplayBuffs](https://gamebanana.com/mods/436369) |  | |
-| [DisplayFutureSkills](https://gamebanana.com/mods/374425) |  | |
+| [DisplayFutureSkills](https://gamebanana.com/mods/374425) | :heavy_check_mark: | [presets](_cfg_presets/DisplayFutureSkills/) |
 | [DisplayTrueLevel](https://gamebanana.com/mods/417721) |  | |
 | [EarlyCompendium](https://gamebanana.com/mods/441592) |  | |
 | [EscapeOnHard](https://gamebanana.com/mods/379292) | :heavy_check_mark: | [presets](_cfg_presets/EscapeOnHard/) |
 | [EveryoneGetsExp](https://gamebanana.com/mods/378534) | :heavy_check_mark: | [presets](_cfg_presets/EveryoneGetsExp/) |
 | [FiendsNerf](https://gamebanana.com/mods/442339) |  | |
-| [FixedJavelinRainXerosBeat](https://gamebanana.com/mods/441774) |  | |
+| [FixedJavelinRainXerosBeat](https://gamebanana.com/mods/441774) | TODO (fix & buff) | |
 | [FocusMagic](https://gamebanana.com/mods/416965) |  | |
 | [HealEveryone](https://gamebanana.com/mods/406830) |  | |
 | [HourglassItem](https://gamebanana.com/mods/441740) |  | |
