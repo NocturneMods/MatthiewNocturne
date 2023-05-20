@@ -35,4 +35,3 @@ In bold, the only currently supported variant:
 - PiercingMagmaAxis (**including repel** / no repel)
 - FocusMagic (**standalone** / fixed focus compatible)
 - PierceWithoutTde (**80** / 90)
-- TruePierce (**phys including repel** / everything / phys+magic / phys+magic no repel)
