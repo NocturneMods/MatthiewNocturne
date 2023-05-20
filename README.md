@@ -34,7 +34,6 @@ Everything else.
 In bold, the only currently supported variant:
 - BetterNewGamePlus (**magatama+items+demons+macca** / demons / items / macca / magatama / nothing / modern)
 - PiercingMagmaAxis (**including repel** / no repel)
-- NormalPricesOnHard (**normal prices** / double prices)
 - FocusMagic (**standalone** / fixed focus compatible)
 - PierceWithoutTde (**80** / 90)
 - TruePierce (**phys including repel** / everything / phys+magic / phys+magic no repel)
