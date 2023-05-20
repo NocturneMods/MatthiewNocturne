@@ -5,7 +5,7 @@ using HarmonyLib;
 using Il2Cpp;
 using MelonLoader;
 
-[assembly: MelonInfo(typeof(FocusMagicMod), "Focus Magic (ver. 0.6)", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(FocusMagicMod), "Focus Magic (ver. 0.6)", "1.1.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace FocusMagic;
