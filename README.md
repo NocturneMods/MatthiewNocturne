@@ -1,6 +1,7 @@
-**UNSTABLE DEV BRANCH** : adds support for configurations in various mods !
+**DEV BRANCH** : adds support for configurations in various mods
 
-Objective : make it easy to check Matthiew's Nocture Remaster mods, compile them easily, and add configuration support.
+Please report any **bug** you have with the mods by **opening an issue** !
+You can also submit feature request to add configurations in existing mods.
 
 # Mods
 
@@ -43,7 +44,7 @@ Some mods can be further configured (these), these will have Nocturne vanilla be
 | [SkipAmalaMinigame](https://gamebanana.com/mods/415578) |  | |
 | [TruePierce](https://gamebanana.com/mods/411510) | :heavy_check_mark: | [presets](_cfg_presets/TruePierce/) |
 
-### Configure mods
+### How to configure mods
 
 After starting the game once with mods loaded, open the SMT3 steam folder, and head to `smt3hd\UserData\ModsCfg\`, there will be one `.cfg` configuration file for each configurable mod.
 You can open them with any text editor, and edit the values as you see fit, each entry you can edit is preceded by a comment line describing it (starting with a `#`). You can find configuration presets for each mod in the [_cfg_presets](_cfg_presets) folder (in the `Presets` folder in releases).
