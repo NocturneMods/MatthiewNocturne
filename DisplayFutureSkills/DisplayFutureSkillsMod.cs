@@ -23,7 +23,7 @@ public class DisplayFutureSkillsMod : MelonMod
         Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("DisplayFutureSkills");
-        s_cfgTease = s_cfgCategoryMain.CreateEntry("TeaseDemifiendSkills", true, description: "Keeps some cool Demi-fiend skills as '?'.");
+        s_cfgTease = s_cfgCategoryMain.CreateEntry("TeaseDemifiendSkills", true, description: "Keeps Demi-fiend's True-Demon-Ending exclusive skill as '?'.");
 
         s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgCategoryMain.SaveToFile();

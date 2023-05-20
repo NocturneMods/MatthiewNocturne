@@ -24,7 +24,7 @@ public class NormalPricesOnHardMod : MelonMod
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("NormalPricesOnHard");
         s_cfgPriceMultiplierNormal = s_cfgCategoryMain.CreateEntry<float>("PriceMultiplierNormal", 1.0f, "Price multiplier", description: "Items will cost their vanilla price multiplied by this value. (default: x1)");
-        s_cfgPriceMultiplierHard = s_cfgCategoryMain.CreateEntry<float>("PriceMultiplierHard", 3.0f, "Price multiplier (Hard difficulty)", description: "In hard difficulty, items will cost their vanilla price multiplied by this value. (default: x3)");
+        s_cfgPriceMultiplierHard = s_cfgCategoryMain.CreateEntry<float>("PriceMultiplierHard", 3.0f, "Price multiplier (Hard difficulty)", description: "In hard difficulty, items will cost their Normal-mode vanilla price multiplied by this value. (default: x3)");
 
         s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgCategoryMain.SaveToFile();

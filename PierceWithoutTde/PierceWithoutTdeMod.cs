@@ -16,7 +16,6 @@ public class PierceWithoutTdeMod : MelonMod
 
     private static MelonPreferences_Category s_cfgCategoryMain = null!;
     private static MelonPreferences_Entry<byte> s_cfgUnlockLevelCustom = null!;
-    private static MelonPreferences_Entry<byte> s_cfgUnlockLevelVanilla = null!;
 
     public override void OnInitializeMelon()
     {
@@ -24,7 +23,6 @@ public class PierceWithoutTdeMod : MelonMod
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("PierceWithoutTde");
         s_cfgUnlockLevelCustom = s_cfgCategoryMain.CreateEntry<byte>("UnlockLevelCustom", 255, "Unlock level of Pierce", description: "Unlock level of Pierce without any condition.");
-        s_cfgUnlockLevelVanilla = s_cfgCategoryMain.CreateEntry<byte>("UnlockLevelVanilla", 21, "Vanilla unlock level of Pierce", description: "Unlock level of Pierce in vanilla setting.");
 
         s_cfgCategoryMain.SetFilePath(ConfigPath);
         s_cfgCategoryMain.SaveToFile();
@@ -50,7 +48,7 @@ public class PierceWithoutTdeMod : MelonMod
                 }
                 else
                 {
-                    tblHearts.fclHeartsTbl[1].Skill[5].TargetLevel = s_cfgUnlockLevelVanilla.Value; // If unlocked normally, you can get it early
+                    tblHearts.fclHeartsTbl[1].Skill[5].TargetLevel = 21; // If unlocked normally, you can get it early
                 }
             }
         }

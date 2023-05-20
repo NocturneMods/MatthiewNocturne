@@ -24,7 +24,7 @@ public class BetterNewGamePlusMod : MelonMod
 
     private static MelonPreferences_Category s_cfgCategoryMain = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepItemsAll = null!;
-    private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepItemsKey = null!;
+    private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepItemsReusable = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepMacca = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepMagatama = null!;
     private static MelonPreferences_Entry<NgpActivationCondition> s_cfgKeepDemons = null!;
@@ -43,7 +43,7 @@ public class BetterNewGamePlusMod : MelonMod
 
         s_cfgCategoryMain = MelonPreferences.CreateCategory("BetterNewGamePlus");
         s_cfgKeepItemsAll = s_cfgCategoryMain.CreateEntry("KeepItemsAll", NgpActivationCondition.Never, "Keep items on NG+", description: "Keep all items on NG+ (Never/Leather/Always)");
-        s_cfgKeepItemsKey = s_cfgCategoryMain.CreateEntry("KeepItemsKey", NgpActivationCondition.Never, "Keep items on NG+", description: "Keep only key items on NG+ (Never/Leather/Always), overriden by KeepItemsAll if both have the same activation condition.");
+        s_cfgKeepItemsReusable = s_cfgCategoryMain.CreateEntry("KeepItemsReusable", NgpActivationCondition.Never, "Keep reusable items on NG+", description: "Keep only reusable items on NG+ (Never/Leather/Always), overriden by KeepItemsAll if both have the same activation condition.");
         s_cfgKeepMacca = s_cfgCategoryMain.CreateEntry("KeepMacca", NgpActivationCondition.Never, "Keep macca on NG+", description: "Keep macca on NG+ (Never/Leather/Always)");
         s_cfgKeepMagatama = s_cfgCategoryMain.CreateEntry("KeepMagatama", NgpActivationCondition.Never, "Keep magatama on NG+", description: "Keep magatama on NG+ (Never/Leather/Always)");
         s_cfgKeepDemons = s_cfgCategoryMain.CreateEntry("KeepDemons", NgpActivationCondition.Never, "Keep demons on NG+", description: "Keep demons on NG+ (Never/Leather/Always)");
@@ -88,7 +88,7 @@ public class BetterNewGamePlusMod : MelonMod
             dds3GlobalWork.DDS3_GBWK.item = s_itemList; // Items
         }
         // If keeping key items only
-        else if (s_cfgKeepItemsKey.Value == currentCase)
+        else if (s_cfgKeepItemsReusable.Value == currentCase)
         {
             dds3GlobalWork.DDS3_GBWK.item[12] = s_itemList[12]; // Chakra Elixir
             dds3GlobalWork.DDS3_GBWK.item[44] = s_itemList[44]; // Blessed Fan
