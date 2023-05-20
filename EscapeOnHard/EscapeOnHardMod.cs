@@ -58,7 +58,7 @@ public class EscapeOnHardMod : MelonMod
     [HarmonyPatch(typeof(nbCalc), nameof(nbCalc.nbCheckEscape))]
     private class Patch2
     {
-        public static void Postfix(ref nbMainProcessData_t data, ref int __result)
+        public static void Postfix(ref int __result)
         {
             // If Demi-fiend is the one escaping and he has Fast Retreat and he would fail the escape
             if (datCalc.datCheckSkillInParty(296) == 1 && __result == 0)
@@ -94,7 +94,7 @@ public class EscapeOnHardMod : MelonMod
         {
             if (id == 296)
             {
-                __result = "Guarantees escape \nduring user's turn."; // New description for Fast Retreat
+                __result = "Guarantees escape \nwhen possible."; // New description for Fast Retreat
             }
         }
     }
