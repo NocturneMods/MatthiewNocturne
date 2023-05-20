@@ -28,7 +28,7 @@ Some mods can be further configured (these), these will have Nocturne vanilla be
 | [EscapeOnHard](https://gamebanana.com/mods/379292) | :heavy_check_mark: | [presets](_cfg_presets/EscapeOnHard/) |
 | [EveryoneGetsExp](https://gamebanana.com/mods/378534) | :heavy_check_mark: | [presets](_cfg_presets/EveryoneGetsExp/) |
 | [FiendsNerf](https://gamebanana.com/mods/442339) |  | |
-| [FixedJavelinRainXerosBeat](https://gamebanana.com/mods/441774) | TODO (fix & buff) | |
+| [FixedJavelinRainXerosBeat](https://gamebanana.com/mods/441774) | :heavy_check_mark: | [presets](_cfg_presets/FixedJavelinRainXerosBeat/) |
 | [FocusMagic](https://gamebanana.com/mods/416965) |  | |
 | [HealEveryone](https://gamebanana.com/mods/406830) |  | |
 | [HourglassItem](https://gamebanana.com/mods/441740) |  | |
