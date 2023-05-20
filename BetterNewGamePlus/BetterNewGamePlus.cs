@@ -7,7 +7,7 @@ using Il2Cppnewdata_H;
 using MelonLoader;
 using MelonLoader.Utils;
 
-[assembly: MelonInfo(typeof(BetterNewGamePlusMod), "Better New Game Plus (0.6 ver.)", "1.0.0", "Matthiew Purple & xenopiece")]
+[assembly: MelonInfo(typeof(BetterNewGamePlusMod), "Better New Game Plus (0.6 ver.)", "2.0.0", "Matthiew Purple & xenopiece & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace BetterNewGamePlus;

@@ -6,7 +6,7 @@ using MelonLoader;
 using MelonLoader.Utils;
 using NormalPricesOnHard;
 
-[assembly: MelonInfo(typeof(NormalPricesOnHardMod), "Normal prices on Hard (ver. 0.6)", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(NormalPricesOnHardMod), "Normal prices on Hard (ver. 0.6)", "2.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace NormalPricesOnHard;

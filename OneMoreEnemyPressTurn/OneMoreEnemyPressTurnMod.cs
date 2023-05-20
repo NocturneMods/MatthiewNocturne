@@ -7,7 +7,7 @@ using MelonLoader;
 using MelonLoader.Utils;
 using OneMoreEnemyPressTurn;
 
-[assembly: MelonInfo(typeof(OneMoreEnemyPressTurnMod), "One more enemy Press Turn (ver. 0.6)", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(OneMoreEnemyPressTurnMod), "One more enemy Press Turn (ver. 0.6)", "2.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace OneMoreEnemyPressTurn;

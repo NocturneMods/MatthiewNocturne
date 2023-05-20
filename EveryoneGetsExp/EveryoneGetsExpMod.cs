@@ -6,7 +6,7 @@ using Il2Cpp;
 using MelonLoader;
 using MelonLoader.Utils;
 
-[assembly: MelonInfo(typeof(EveryoneGetsExpMod), "Everyone Gets Experience 25% (0.6 ver.)", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(EveryoneGetsExpMod), "Everyone Gets Experience (0.6 ver.)", "2.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace EveryoneGetsExp;

@@ -6,7 +6,7 @@ using MelonLoader;
 using MelonLoader.Utils;
 using ModernPressTurns;
 
-[assembly: MelonInfo(typeof(ModernPressTurnsMod), "Modern Press Turns [SMT V] (0.6 ver.)", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(ModernPressTurnsMod), "Modern Press Turns (0.6 ver.)", "2.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace ModernPressTurns;

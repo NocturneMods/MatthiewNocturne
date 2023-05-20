@@ -6,7 +6,7 @@ using MelonLoader;
 using MelonLoader.Utils;
 using PierceWithoutTde;
 
-[assembly: MelonInfo(typeof(PierceWithoutTdeMod), "Pierce without TDE (ver. 0.6)", "1.0.1", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(PierceWithoutTdeMod), "Pierce without TDE (ver. 0.6)", "2.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace PierceWithoutTde;

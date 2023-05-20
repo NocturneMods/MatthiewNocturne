@@ -6,7 +6,7 @@ using MelonLoader;
 using MelonLoader.Utils;
 using TruePierce;
 
-[assembly: MelonInfo(typeof(TruePierceMod), "Pierce physical repel (ver. 0.6)", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(TruePierceMod), "True Pierce (ver. 0.6)", "2.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace TruePierce;

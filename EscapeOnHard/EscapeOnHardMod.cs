@@ -8,7 +8,7 @@ using MelonLoader;
 using MelonLoader.Utils;
 using Random = System.Random;
 
-[assembly: MelonInfo(typeof(EscapeOnHardMod), "Escape on Hard [low odds] (ver. 0.6)", "1.0.0", "Matthiew Purple")]
+[assembly: MelonInfo(typeof(EscapeOnHardMod), "Escape on Hard (ver. 0.6)", "2.0.0", "Matthiew Purple & Kraby")]
 [assembly: MelonGame("アトラス", "smt3hd")]
 
 namespace EscapeOnHard;
