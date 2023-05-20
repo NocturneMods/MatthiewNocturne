@@ -33,4 +33,3 @@ Everything else.
 
 In bold, the only currently supported variant:
 - PiercingMagmaAxis (**including repel** / no repel)
-- FocusMagic (**standalone** / fixed focus compatible)
