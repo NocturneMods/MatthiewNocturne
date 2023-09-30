@@ -230,6 +230,15 @@ public class TruePierceMod : MelonMod
             if (s_hasPierce && isTypeTruePierce && (!isRepel || s_cfgAllowRepel.Value) && (__result < 100 || (__result >= 65536 && __result < 2147483648)))
             {
                 __result = 100; // Forces the affinity to become "neutral"
+                if ((__result >> 20) % 2 == 1)
+                {
+                    __result = 100 + 1048576; // Forces the affinity to become "neutral" but keeps Freeze/Shock resistance
+                }
+                else
+                {
+                    __result = 100; // Forces the affinity to become "neutral"
+                }
+
                 nbMainProcess.nbGetMainProcessData().d31_kantuu = 1; // Displays the "Pierced!" message
             }
         }
