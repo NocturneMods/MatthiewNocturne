@@ -1,11 +1,9 @@
-**DEV BRANCH** : adds support for configurations in various mods
-
 Please report any **bug** you have with the mods by **opening an issue** !
 You can also submit feature request to add configurations in existing mods.
 
 # Mods
 
-## Modpack content
+Up to date to [*Quality of Death*](https://gamebanana.com/mods/443748) **v1.0.3**.
 
 Some mods can be further configured (these), these will have Nocturne vanilla behaviour by default (=~ disabled). To enable them, check out their available presets.
 
@@ -43,6 +41,7 @@ Some mods can be further configured (these), these will have Nocturne vanilla be
 | [RepulseBellEveryShop](https://gamebanana.com/mods/382242) |  | |
 | [SkipAmalaMinigame](https://gamebanana.com/mods/415578) |  | |
 | [TruePierce](https://gamebanana.com/mods/411510) | :heavy_check_mark: | [presets](_cfg_presets/TruePierce/) |
+| [RedCapoteBuff](https://github.com/MatthiewPurple/red-capote-buff) |  |  |
 
 ### How to configure mods
 
@@ -51,7 +50,7 @@ You can open them with any text editor, and edit the values as you see fit, each
 
 ## Bonus / Non-canonical mods
 
-List of standalone mods that won't be part of the modpack (fate to be determined):
+List of standalone mods that aren't part of the Quality Of Death modpack (fate to be determined):
 - [PiercingMagmaAxis](https://gamebanana.com/mods/380326)
 - [UncappedMagic](https://gamebanana.com/mods/416903)
 - [DanteOnNewGamePlus](https://gamebanana.com/mods/439012)

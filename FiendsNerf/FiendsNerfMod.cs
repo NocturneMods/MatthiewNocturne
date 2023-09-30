@@ -11,39 +11,55 @@ using MelonLoader;
 namespace FiendsNerf;
 public class FiendsNerfMod : MelonMod
 {
+    private static bool s_isAnalyzing = false;
+
     // After getting the affinities of a demon
     [HarmonyPatch(typeof(datAisyoName), nameof(datAisyoName.Get))]
     private class Patch
     {
         public static void Postfix(ref int id, ref string __result)
         {
-            switch (id)
+            if (!s_isAnalyzing)
             {
-                case 199:
-                    __result = "Null: Force/Light/Dark • Str: Nerve • Weak: Elec"; // Matador
-                    break;
-                case 201:
-                    __result = "Null: Light/Dark/Mind • Str: Curse • Weak: Fire"; // Daisoujou
-                    break;
-                case 200:
-                    __result = "Drn: Force • Null: Fire/Light/Dark • Str: Nerve • Weak: Ice"; // Hell Biker
-                    break;
-                case 196:
-                    __result = "Null: Fire/Light/Dark/Nerve • Weak: Elec"; // White Rider
-                    break;
-                case 197:
-                    __result = "Null: Elec/Force/Light/Dark/Mind • Weak: Ice"; // Red Rider
-                    break;
-                case 198:
-                    __result = "Drn: Ice • Null: Light/Dark/Curse • Weak: Force"; // Black Rider
-                    break;
-                case 195:
-                    __result = "Null: Ice/Light/Dark/Curse/Mind • Weak: Fire"; // Pale Rider
-                    break;
-                case 202:
-                    __result = "Rpl: Phys • Drn: Elec • Null: Light/Dark • Str: Ailments • Weak Force"; // Mother Harlot
-                    break;
+                switch (id)
+                {
+                    case 199:
+                        __result = "Null: Force/Light/Dark • Str: Nerve • Weak: Elec"; // Matador
+                        break;
+                    case 201:
+                        __result = "Null: Light/Dark/Mind • Str: Curse • Weak: Fire"; // Daisoujou
+                        break;
+                    case 200:
+                        __result = "Drn: Force • Null: Fire/Light/Dark • Str: Nerve • Weak: Ice"; // Hell Biker
+                        break;
+                    case 196:
+                        __result = "Null: Fire/Light/Dark/Nerve • Weak: Elec"; // White Rider
+                        break;
+                    case 197:
+                        __result = "Null: Elec/Force/Light/Dark/Mind • Weak: Ice"; // Red Rider
+                        break;
+                    case 198:
+                        __result = "Drn: Ice • Null: Light/Dark/Curse • Weak: Force"; // Black Rider
+                        break;
+                    case 195:
+                        __result = "Null: Ice/Light/Dark/Curse/Mind • Weak: Fire"; // Pale Rider
+                        break;
+                    case 202:
+                        __result = "Rpl: Phys • Drn: Elec • Null: Light/Dark • Str: Ailments • Weak Force"; // Mother Harlot
+                        break;
+                }
             }
+
+            s_isAnalyzing = false;
+        }
+    }
+
+    [HarmonyPatch(typeof(datDevilFormat), nameof(datDevilFormat.Analyze))]
+    private class Patch2
+    {
+        public static void Prefix()
+        {
+            s_isAnalyzing = true;
         }
     }
 
